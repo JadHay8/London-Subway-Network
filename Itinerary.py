@@ -9,8 +9,8 @@ class Itinerary:
         #   whichever has less transfers
         # otherwise: if shortestPath(path1,path2) == path1: return path1 else return path2
 
-    def getShortestPath(self, path1, path2):
-        TODO
+    ##def getShortestPath(self, path1, path2):
+       
 
-    def numTransfers(self, other):
-        TODO
+    #def numTransfers(self, other):
+        
