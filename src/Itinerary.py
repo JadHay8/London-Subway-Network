@@ -59,7 +59,6 @@ def dijkstra(graph, start_node):
     # However, we initialize the starting node's value with 0
     shortest_path[start_node] = 0
 
-    print(unvisited_nodes)
     while unvisited_nodes:
         current_min_node = None
         for node in unvisited_nodes:  # Iterate over the nodes
@@ -83,21 +82,21 @@ def dijkstra(graph, start_node):
     return previous_nodes, shortest_path
 
 
-def test():
-    with open('_dataset/london.stations.csv') as file:
-        stations = csv.reader(file)
+# def test():
+#     with open('_dataset/london.stations.csv') as file:
+#         stations = csv.reader(file)
 
-        # row count other than first line of headers is number of stations
-        numStations = sum(1 for row in stations)+1
+#         # row count other than first line of headers is number of stations
+#         numStations = sum(1 for row in stations)+1
 
-        graph = Graph(numStations)
+#         graph = Graph(numStations)
 
-        with open('_dataset/london.connections.csv') as file2:
-            connections = csv.reader(file2)
-            for fileLine in connections:
-                if connections.line_num != 1:
-                    graph.add_edge(int(fileLine[0]), int(
-                        fileLine[1]), int(fileLine[3]))
+#         with open('_dataset/london.connections.csv') as file2:
+#             connections = csv.reader(file2)
+#             for fileLine in connections:
+#                 if connections.line_num != 1:
+#                     graph.add_edge(int(fileLine[0]), int(
+#                         fileLine[1]), int(fileLine[3]))
 
     # graph.print_adj_list()
 
@@ -116,5 +115,94 @@ def test():
 
     print_result(previous_nodes, shortest_path, 1, 286)
 
+# test()
 
-test()
+
+# def h(n):
+#         H = {
+#             'A': 1,
+#             'B': 1,
+#             'C': 1,
+#             'D': 1
+#         }
+
+#         return H[n]
+
+
+def a_star_algorithm(start, stop):
+
+    # Source: https://www.pythonpool.com/a-star-algorithm-python/#:~:text=A*%20Algorithm%20in%20Python%20or,a%20wide%20range%20of%20contexts.
+
+    # In this open_lst is a lisy of nodes which have been visited, but who's
+    # neighbours haven't all been always inspected, It starts off with the start
+    # node
+    # And closed_lst is a list of nodes which have been visited
+    # and who's neighbors have been always inspected
+    open_lst = set([start])
+    closed_lst = set([])
+
+    # poo has present distances from start to all other nodes
+    # the default value is +infinity
+    poo = {}
+    poo[start] = 0
+
+    # par contains an adjac mapping of all nodes
+    par = {}
+    par[start] = start
+
+    while len(open_lst) > 0:
+        n = None
+
+        # it will find a node with the lowest value of f() -
+        for v in open_lst:
+            if n == None or poo[v] + self.h(v) < poo[n] + self.h(n):
+                n = v
+
+        if n == None:
+            print('Path does not exist!')
+            return None
+
+        # if the current node is the stop
+        # then we start again from start
+        if n == stop:
+            reconst_path = []
+
+            while par[n] != n:
+                reconst_path.append(n)
+                n = par[n]
+
+            reconst_path.append(start)
+
+            reconst_path.reverse()
+
+            print('Path found: {}'.format(reconst_path))
+            return reconst_path
+
+        # for all the neighbors of the current node do
+        for (m, weight) in self.get_neighbors(n):
+            # if the current node is not presentin both open_lst and closed_lst
+            # add it to open_lst and note n as it's par
+            if m not in open_lst and m not in closed_lst:
+                open_lst.add(m)
+                par[m] = n
+                poo[m] = poo[n] + weight
+
+            # otherwise, check if it's quicker to first visit n, then m
+            # and if it is, update par data and poo data
+            # and if the node was in the closed_lst, move it to open_lst
+            else:
+                if poo[m] > poo[n] + weight:
+                    poo[m] = poo[n] + weight
+                    par[m] = n
+
+                    if m in closed_lst:
+                        closed_lst.remove(m)
+                        open_lst.add(m)
+
+        # remove n from the open_lst, and add it to closed_lst
+        # because all of his neighbors were inspected
+        open_lst.remove(n)
+        closed_lst.add(n)
+
+    print('Path does not exist!')
+    return None
