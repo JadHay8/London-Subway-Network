@@ -9,8 +9,10 @@ class Graph:
         # Define the type of a graph
         self.m_directed = directed
 
+        self.node_dist = {node: set() for node in self.m_nodes}
         self.m_adj_list = {node: set() for node in self.m_nodes}
-
+        
+#---------------------adj_list-----------------------------------------
     def add_edge(self, node1, node2, weight):
         self.m_adj_list[node1].add((node2, weight))
 
@@ -19,6 +21,9 @@ class Graph:
 
     def get_nodes(self):
         return self.m_num_of_nodes
+    
+    def get_adjList(self):
+        return self.m_adj_list
 
     def value(self, node1, node2):
         "Returns the value of an edge between two nodes."
@@ -34,41 +39,62 @@ class Graph:
             connections.append(tuple[0])
 
         return connections
-
+    
+    
     def print_adj_list(self):
         # print(self.m_adj_list.get(1))
         # print("adjacency list: \t", self.m_adj_list)
         for key in self.m_adj_list.keys():
             print("node", key, ": ", self.m_adj_list[key])
-        print("end adj list \n")
+        print("end adj list \n")  
+
+#---------------------adj_list-----------------------------------------  
+
+
+
+#---------------------node_dist-----------------------------------------
+   
+    def add_node_dist(self, node, long, lat):
+        self.node_dist[node].add((long,lat))
+
+    def get_node_dist(self):
+        return self.node_dist
+   
+    def print_node_dist(self):
+        for key in self.node_dist.keys():
+            print("node", key, ": ", self.node_dist[key])
+        print("end node dist \n") 
+
+#---------------------node_dist-----------------------------------------
 
 # Source: https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/representing-graphs-in-code/
 
 
-# graph = Graph(5)
+#------------------creating graph ---------------------------------
+with open('_dataset/london.stations.csv') as file:
+    stations = csv.reader(file)
 
-# graph.add_edge(0, 0, 25)
-# graph.add_edge(0, 1, 5)
-# graph.add_edge(0, 2, 3)
-# graph.add_edge(1, 3, 1)
-# graph.add_edge(1, 4, 15)
-# graph.add_edge(4, 2, 7)
-# graph.add_edge(4, 3, 11)
-# graph.print_adj_list()
+    # row count other than first line of headers is number of stations
+    numStations = sum(1 for row in stations)+1
 
-# with open('_dataset/london.stations.csv') as file:
-#     stations = csv.reader(file)
+    graph = Graph(numStations)
 
-#     # row count other than first line of headers is number of stations
-#     numStations = sum(1 for row in stations)+1
+    #Have to open it again for some reason
+    with open('_dataset/london.stations.csv') as filee:
+        stationss = csv.reader(filee)
+        for fileLine in stationss:
+            if stationss.line_num != 1:
+                graph.add_node_dist(float(fileLine[0]), float(fileLine[1]), float(fileLine[2]))
 
-#     graph = Graph(numStations)
+    with open('_dataset/london.connections.csv') as file2:
+        connections = csv.reader(file2)
+        for fileLine in connections:
+            #print(fileLine)
+            if connections.line_num != 1:
+                graph.add_edge(int(fileLine[0]), int(fileLine[1]), int(fileLine[3]))
+                
+   #------------------creating graph ---------------------------------     
+    
+    #graph.print_adj_list()
+    #graph.print_node_dist()
 
-#     with open('_dataset/london.connections.csv') as file2:
-#         connections = csv.reader(file2)
-#         for fileLine in connections:
-#             if connections.line_num != 1:
-#                 graph.add_edge(int(fileLine[0]), int(
-#                     fileLine[1]), int(fileLine[3]))
-
-#     graph.print_adj_list()
