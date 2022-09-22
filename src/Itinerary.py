@@ -1,5 +1,3 @@
-from codecs import latin_1_decode
-from pdb import lasti2lineno
 from Graph import Graph
 from Graph import BuildGraph
 import sys
@@ -14,14 +12,15 @@ class Itinerary:
         self.station2 = station2
 
     def rankPaths(self, path1, path2):
-        pass
-        # if length(path1) == length(path2):
-        #   whichever has less transfers
-        # otherwise: if shortestPath(path1,path2) == path1: return path1 else return path2
+        """"This is called if time of path 1 is the same as time of path 2"""
 
-    def numTransfers(self, other):
-        TODO
-        pass
+        if self.numTransfers(path1) > self.numTransfers(path2):
+            return path2
+        else:
+            return path1
+
+    def numTransfers(self, station):
+        return len(station)-1
 
     def getItinerary(self):
         '''
@@ -119,7 +118,7 @@ def test():
 
     print_result(previous_nodes, shortest_path, 1, 286)
 
-#test()
+# test()
 
 
 def h(graph, s1, s2) -> float:
@@ -214,26 +213,47 @@ def a_star_algorithm(graph, start, stop):
     return None
 
 
-# def test_a_star():
-#     graph = Graph(10)
-#     graph.add_edge(1, 2, 3)
-#     graph.add_edge(5, 3, 2)
-#     graph.add_edge(8, 4, 6)
-#     graph.add_edge(8, 7, 2)
-#     graph.add_edge(9, 7, 1)
-#     graph.add_edge(9, 8, 3)
-#     graph.add_edge(6, 0, 2)
+def test_a_star():
+    # graph = Graph(10)
+    # graph.add_edge(1, 2, 3)
+    # graph.add_edge(5, 3, 2)
+    # graph.add_edge(8, 4, 6)
+    # graph.add_edge(8, 7, 2)
+    # graph.add_edge(9, 7, 1)
+    # graph.add_edge(9, 8, 3)
+    # graph.add_edge(6, 0, 2)
 
+    with open('_dataset/london.stations.csv') as file:
+        stations = csv.reader(file)
 
-#     graph.print_adj_list()
-#     print("hey", graph.get_node_loc(4))
-with open('_dataset/london.stations.csv') as file:
-            stations = csv.reader(file)
+        graph = Graph(1+sum(1 for row in stations))
+
+        # Go back to beginning of file by reopening
+
+        with open('_dataset/london.stations.csv') as filee:
+            stationss = csv.reader(filee)
+            for fileLine in stationss:
+                if stationss.line_num != 1:
+                    graph.add_node_loc(float(fileLine[0]), float(
+                        fileLine[1]), float(fileLine[2]))
+
+        with open('_dataset/london.connections.csv') as file2:
+            connections = csv.reader(file2)
+            for fileLine in connections:
+                # print(fileLine)
+                if connections.line_num != 1:
+                    graph.add_edge(int(fileLine[0]), int(
+                        fileLine[1]), int(fileLine[3]))
+
+    # graph.print_adj_list()
+        # print("hey", graph.get_node_loc(1))
+
+    a_star_algorithm(graph, 1, 286)
+
 
 with open('_dataset/london.connections.csv') as file2:
-                connections = csv.reader(file2)
-app = BuildGraph(file,file2)
+    connections = csv.reader(file2)
+app = BuildGraph(file, file2)
 graph = app.build_graph()
 
 a_star_algorithm(graph, 1, 286)
-
