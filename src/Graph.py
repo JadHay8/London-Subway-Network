@@ -9,10 +9,10 @@ class Graph:
         # Define the type of a graph
         self.m_directed = directed
 
-        self.node_dist = {node: set() for node in self.m_nodes}
+        self.node_loc = {node: [] for node in self.m_nodes}
         self.m_adj_list = {node: set() for node in self.m_nodes}
-        
-#---------------------adj_list-----------------------------------------
+
+# ---------------------adj_list-----------------------------------------
     def add_edge(self, node1, node2, weight):
         self.m_adj_list[node1].add((node2, weight))
 
@@ -21,7 +21,7 @@ class Graph:
 
     def get_nodes(self):
         return self.m_num_of_nodes
-    
+
     def get_adjList(self):
         return self.m_adj_list
 
@@ -31,7 +31,7 @@ class Graph:
             if tuple[0] == node2:
                 return tuple[1]
 
-    def get_outgoing_edges(self, node):
+    def get_neighbors(self, node):
         "Returns the neighbors of a node."
         connections = []
         # append all neighbours of node
@@ -39,38 +39,37 @@ class Graph:
             connections.append(tuple[0])
 
         return connections
-    
-    
+
     def print_adj_list(self):
         # print(self.m_adj_list.get(1))
         # print("adjacency list: \t", self.m_adj_list)
         for key in self.m_adj_list.keys():
             print("node", key, ": ", self.m_adj_list[key])
-        print("end adj list \n")  
+        print("end adj list \n")
 
-#---------------------adj_list-----------------------------------------  
+# ---------------------adj_list-----------------------------------------
 
 
+# ---------------------node_loc-----------------------------------------
 
-#---------------------node_dist-----------------------------------------
-   
-    def add_node_dist(self, node, long, lat):
-        self.node_dist[node].add((long,lat))
 
-    def get_node_dist(self):
-        return self.node_dist
-   
-    def print_node_dist(self):
-        for key in self.node_dist.keys():
-            print("node", key, ": ", self.node_dist[key])
-        print("end node dist \n") 
+    def add_node_loc(self, node, long, lat):
+        self.node_loc[node].append((long, lat))
 
-#---------------------node_dist-----------------------------------------
+    def get_node_loc(self, station):
+        return self.node_loc.get(station)[0]
+
+    def print_node_loc(self):
+        for key in self.node_loc.keys():
+            print("node", key, ": ", self.node_loc[key])
+        print("end node dist \n")
+
+# ---------------------node_loc-----------------------------------------
 
 # Source: https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/representing-graphs-in-code/
 
 
-#------------------creating graph ---------------------------------
+# ------------------creating graph ---------------------------------
 with open('_dataset/london.stations.csv') as file:
     stations = csv.reader(file)
 
@@ -79,22 +78,25 @@ with open('_dataset/london.stations.csv') as file:
 
     graph = Graph(numStations)
 
-    #Have to open it again for some reason
+    # Go back to beginning of file by reopening
+
     with open('_dataset/london.stations.csv') as filee:
         stationss = csv.reader(filee)
         for fileLine in stationss:
             if stationss.line_num != 1:
-                graph.add_node_dist(float(fileLine[0]), float(fileLine[1]), float(fileLine[2]))
+                graph.add_node_loc(float(fileLine[0]), float(
+                    fileLine[1]), float(fileLine[2]))
 
     with open('_dataset/london.connections.csv') as file2:
         connections = csv.reader(file2)
         for fileLine in connections:
-            #print(fileLine)
+            # print(fileLine)
             if connections.line_num != 1:
-                graph.add_edge(int(fileLine[0]), int(fileLine[1]), int(fileLine[3]))
-                
-   #------------------creating graph ---------------------------------     
-    
-    #graph.print_adj_list()
-    #graph.print_node_dist()
+                graph.add_edge(int(fileLine[0]), int(
+                    fileLine[1]), int(fileLine[3]))
 
+   # ------------------creating graph ---------------------------------
+
+    # graph.print_adj_list()
+    # graph.print_node_loc()
+    print(graph.get_node_loc(7))

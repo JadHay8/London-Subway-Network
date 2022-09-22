@@ -1,6 +1,9 @@
+from codecs import latin_1_decode
+from pdb import lasti2lineno
 from Graph import Graph
 import sys
 import csv
+import math
 
 
 class Itinerary:
@@ -68,7 +71,7 @@ def dijkstra(graph, start_node):
                 current_min_node = node
 
         # The code block below retrieves the current node's neighbors and updates their distances
-        neighbors = graph.get_outgoing_edges(current_min_node)
+        neighbors = graph.get_neighbors(current_min_node)
         for neighbor in neighbors:
             tentative_value = shortest_path[current_min_node] + \
                 graph.value(current_min_node, neighbor)
@@ -118,22 +121,25 @@ def dijkstra(graph, start_node):
 # test()
 
 
-# def h(n):
-#         H = {
-#             'A': 1,
-#             'B': 1,
-#             'C': 1,
-#             'D': 1
-#         }
+def h(graph, s1, s2) -> float:
+    # print("here", graph.get_node_loc(4)[0][0])
+    # print("h", s1, s2)
+    lat1 = graph.get_node_loc(s1)[0]
+    long1 = graph.get_node_loc(s1)[1]
+    lat2 = graph.get_node_loc(s2)[0]
+    long2 = graph.get_node_loc(s2)[1]
 
-#         return H[n]
+    # distance between in km
+    print("distance: ", 6378.8*math.acos((math.sin(lat1) * math.sin(lat2)) +
+          math.cos(lat1) * math.cos(lat2) * math.cos(long2-long1)))
+    return 6378.8*math.acos((math.sin(lat1) * math.sin(lat2)) + math.cos(lat1) * math.cos(lat2) * math.cos(long2-long1))
 
 
-def a_star_algorithm(start, stop):
+def a_star_algorithm(graph, start, stop):
 
     # Source: https://www.pythonpool.com/a-star-algorithm-python/#:~:text=A*%20Algorithm%20in%20Python%20or,a%20wide%20range%20of%20contexts.
 
-    # In this open_lst is a lisy of nodes which have been visited, but who's
+    # In this open_lst is a list of nodes which have been visited, but who's
     # neighbours haven't all been always inspected, It starts off with the start
     # node
     # And closed_lst is a list of nodes which have been visited
@@ -153,9 +159,11 @@ def a_star_algorithm(start, stop):
     while len(open_lst) > 0:
         n = None
 
+        print("hi", open_lst)
         # it will find a node with the lowest value of f() -
         for v in open_lst:
-            if n == None or poo[v] + self.h(v) < poo[n] + self.h(n):
+            print("v", v)
+            if n == None or poo[v] + h(graph, v, stop) < poo[n] + h(graph, n, stop):
                 n = v
 
         if n == None:
@@ -179,7 +187,8 @@ def a_star_algorithm(start, stop):
             return reconst_path
 
         # for all the neighbors of the current node do
-        for (m, weight) in self.get_neighbors(n):
+        for m in graph.get_neighbors(n):
+            weight = graph.value(n, m)
             # if the current node is not presentin both open_lst and closed_lst
             # add it to open_lst and note n as it's par
             if m not in open_lst and m not in closed_lst:
@@ -206,3 +215,22 @@ def a_star_algorithm(start, stop):
 
     print('Path does not exist!')
     return None
+
+
+def test_a_star():
+    graph = Graph(10)
+    graph.add_edge(1, 2, 3)
+    graph.add_edge(5, 3, 2)
+    graph.add_edge(8, 4, 6)
+    graph.add_edge(8, 7, 2)
+    graph.add_edge(9, 7, 1)
+    graph.add_edge(9, 8, 3)
+    graph.add_edge(6, 0, 2)
+
+    graph.print_adj_list()
+    print("hey", graph.get_node_loc(4))
+
+    # a_star_algorithm(graph, 4, 9)
+
+
+test_a_star()
