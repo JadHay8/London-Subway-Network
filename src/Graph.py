@@ -69,15 +69,22 @@ class Graph:
 # Source: https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/representing-graphs-in-code/
 
 
+<<<<<<< HEAD
 # ------------------creating graph ---------------------------------
 with open('_dataset/london.stations.csv') as file:
     stations = csv.reader(file)
+=======
+#------------------creating graph ---------------------------------
+class BuildGraph:
+>>>>>>> 94dc741ade8a1c9403079bf0ef2154ff121e39de
 
-    # row count other than first line of headers is number of stations
-    numStations = sum(1 for row in stations)+1
+    def __init__(self, file, file2):
+        self.file = file
+        self.file2 = file2
+        
 
-    graph = Graph(numStations)
 
+<<<<<<< HEAD
     # Go back to beginning of file by reopening
 
     with open('_dataset/london.stations.csv') as filee:
@@ -94,6 +101,41 @@ with open('_dataset/london.stations.csv') as file:
             if connections.line_num != 1:
                 graph.add_edge(int(fileLine[0]), int(
                     fileLine[1]), int(fileLine[3]))
+=======
+    def build_graph(self):
+            # row count other than first line of headers is number of stations
+        with open('_dataset/london.stations.csv') as self.file:
+            stations = csv.reader(self.file)
+            numStations = sum(1 for row in stations)+1
+
+            graph = Graph(numStations)
+
+            #Have to open it again for some reason
+            with open('_dataset/london.stations.csv') as self.file:
+                stations = csv.reader(self.file)
+                for fileLine in stations:
+                    if stations.line_num != 1:
+                        graph.add_node_dist(float(fileLine[0]), float(fileLine[1]), float(fileLine[2]))
+            with open('_dataset/london.connections.csv') as self.file2:
+                connections = csv.reader(self.file2)
+                for fileLine in connections:
+                    #print(fileLine)
+                    if connections.line_num != 1:
+                        graph.add_edge(int(fileLine[0]), int(fileLine[1]), int(fileLine[3]))
+            return graph
+                    
+   #------------------creating graph ---------------------------------     
+with open('_dataset/london.stations.csv') as file:
+            stations = csv.reader(file)
+
+with open('_dataset/london.connections.csv') as file2:
+                connections = csv.reader(file2)
+
+# app = BuildGraph(file,file2)
+# graph = app.build_graph()
+# graph.print_adj_list()
+# graph.print_node_dist()
+>>>>>>> 94dc741ade8a1c9403079bf0ef2154ff121e39de
 
    # ------------------creating graph ---------------------------------
 
