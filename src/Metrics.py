@@ -74,28 +74,7 @@ class numEdgesStrategy(graphMetricsStrategy):
 class nodeDistanceStrategy(graphMetricsStrategy):
    def create_metric(self, m_adj_list):
       return 9
-
-   # implementation with nodeOne and nodeTwo
-   # def create_metric(self, nodeOne, nodeTwo):
-   #      node_dist = graph.get_node_dist()
-   #      temp = node_dist[nodeOne]
-   #      temp2 = node_dist[nodeTwo]
-
-   #      #must be a better way
-   #      for i in temp:
-   #       nodeOneLong = i[0]
-   #       nodeOneLat = i[1]
-   #      for j in temp2:
-   #       nodeTwoLong = j[0]
-   #       nodeTwoLat = j[1]
-
-   #      a = nodeOneLong - nodeTwoLong
-   #      b = nodeOneLat - nodeTwoLat
-   #      c = math.sqrt(a**2 + b**2)
-   #      return c
-
-         
-      
+   
 
 def process_metrics(processingStrategy: graphMetricsStrategy):
    metric = processingStrategy.create_metric(adjList)
@@ -103,9 +82,9 @@ def process_metrics(processingStrategy: graphMetricsStrategy):
 
   
 # Run metrics --------->
-#process_metrics(numEdgesStrategy(1))    #figure out why we need a random parameter
-#process_metrics(nodeDistanceStrategy(1))
-#process_metrics(nodeDegreeStrategy(1))
+# process_metrics(numEdgesStrategy(1))    #figure out why we need a random parameter
+# process_metrics(nodeDistanceStrategy(1))
+# process_metrics(nodeDegreeStrategy(1))
 
 
 

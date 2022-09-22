@@ -1,6 +1,7 @@
 from codecs import latin_1_decode
 from pdb import lasti2lineno
 from Graph import Graph
+from Graph import BuildGraph
 import sys
 import csv
 import math
@@ -85,21 +86,21 @@ def dijkstra(graph, start_node):
     return previous_nodes, shortest_path
 
 
-# def test():
-#     with open('_dataset/london.stations.csv') as file:
-#         stations = csv.reader(file)
+def test():
+    with open('_dataset/london.stations.csv') as file:
+        stations = csv.reader(file)
 
-#         # row count other than first line of headers is number of stations
-#         numStations = sum(1 for row in stations)+1
+        # row count other than first line of headers is number of stations
+        numStations = sum(1 for row in stations)+1
 
-#         graph = Graph(numStations)
+        graph = Graph(numStations)
 
-#         with open('_dataset/london.connections.csv') as file2:
-#             connections = csv.reader(file2)
-#             for fileLine in connections:
-#                 if connections.line_num != 1:
-#                     graph.add_edge(int(fileLine[0]), int(
-#                         fileLine[1]), int(fileLine[3]))
+        with open('_dataset/london.connections.csv') as file2:
+            connections = csv.reader(file2)
+            for fileLine in connections:
+                if connections.line_num != 1:
+                    graph.add_edge(int(fileLine[0]), int(
+                        fileLine[1]), int(fileLine[3]))
 
     # graph.print_adj_list()
 
@@ -118,7 +119,7 @@ def dijkstra(graph, start_node):
 
     print_result(previous_nodes, shortest_path, 1, 286)
 
-# test()
+#test()
 
 
 def h(graph, s1, s2) -> float:
@@ -130,8 +131,6 @@ def h(graph, s1, s2) -> float:
     long2 = graph.get_node_loc(s2)[1]
 
     # distance between in km
-    print("distance: ", 6378.8*math.acos((math.sin(lat1) * math.sin(lat2)) +
-          math.cos(lat1) * math.cos(lat2) * math.cos(long2-long1)))
     return 6378.8*math.acos((math.sin(lat1) * math.sin(lat2)) + math.cos(lat1) * math.cos(lat2) * math.cos(long2-long1))
 
 
@@ -159,10 +158,8 @@ def a_star_algorithm(graph, start, stop):
     while len(open_lst) > 0:
         n = None
 
-        print("hi", open_lst)
         # it will find a node with the lowest value of f() -
         for v in open_lst:
-            print("v", v)
             if n == None or poo[v] + h(graph, v, stop) < poo[n] + h(graph, n, stop):
                 n = v
 
@@ -217,20 +214,26 @@ def a_star_algorithm(graph, start, stop):
     return None
 
 
-def test_a_star():
-    graph = Graph(10)
-    graph.add_edge(1, 2, 3)
-    graph.add_edge(5, 3, 2)
-    graph.add_edge(8, 4, 6)
-    graph.add_edge(8, 7, 2)
-    graph.add_edge(9, 7, 1)
-    graph.add_edge(9, 8, 3)
-    graph.add_edge(6, 0, 2)
-
-    graph.print_adj_list()
-    print("hey", graph.get_node_loc(4))
-
-    # a_star_algorithm(graph, 4, 9)
+# def test_a_star():
+#     graph = Graph(10)
+#     graph.add_edge(1, 2, 3)
+#     graph.add_edge(5, 3, 2)
+#     graph.add_edge(8, 4, 6)
+#     graph.add_edge(8, 7, 2)
+#     graph.add_edge(9, 7, 1)
+#     graph.add_edge(9, 8, 3)
+#     graph.add_edge(6, 0, 2)
 
 
-test_a_star()
+#     graph.print_adj_list()
+#     print("hey", graph.get_node_loc(4))
+with open('_dataset/london.stations.csv') as file:
+            stations = csv.reader(file)
+
+with open('_dataset/london.connections.csv') as file2:
+                connections = csv.reader(file2)
+app = BuildGraph(file,file2)
+graph = app.build_graph()
+
+a_star_algorithm(graph, 1, 286)
+
