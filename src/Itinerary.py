@@ -249,7 +249,8 @@ def test_a_star():
         # print("hey", graph.get_node_loc(1))
 
     a_star_algorithm(graph, 1, 286)
-
+with open('_dataset/london.connections.csv') as file:
+    connections = csv.reader(file)
 
 with open('_dataset/london.connections.csv') as file2:
     connections = csv.reader(file2)
