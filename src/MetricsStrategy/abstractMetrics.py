@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from Graph import Graph
-from Graph import BuildGraph
 import csv
-import math
+from nodeDegree import nodeDegreeStrategy
+
 
 
 #GRAPH (ADJ_LST) TEST CODE-------->
@@ -17,24 +17,9 @@ import math
 # graph.add_edge(6, 0, 2)
 
 
-#GRAPH (NODE_DIST) TEST CODE ---------------->
-# graph = Graph(5)
-# graph.add_node_dist(1, 51.5846, -0.2786)
-# graph.add_node_dist(2, 51.4991, -0.1115)
-# graph.add_node_dist(3, 51.5119, -0.1756)
 
 
 
-with open('_dataset/london.stations.csv') as file:
-            stations = csv.reader(file)
-
-with open('_dataset/london.connections.csv') as file2:
-                connections = csv.reader(file2)
-app = BuildGraph(file,file2)
-graph = app.build_graph()
-
-adjList = graph.get_adjList()
-nodeDist = graph.get_node_dist()
 
 #--------------- STRATEGY PATTERN ------------------------------------------------------
 #abstract method
@@ -43,48 +28,6 @@ class graphMetricsStrategy(ABC,Graph):
    #call with adj_list from graph
    def create_metric(self, m_adj_list): #add -> to specify return type 
      pass
-
-class nodeDegreeStrategy(graphMetricsStrategy):
-   def create_metric(self, m_adj_list):
-      degOfNodes = []
-      #iterate through each node in the list
-      for node in m_adj_list:
-         degree = 0
-         duplicate = []
-         #check if the connection has already been accounted for (would add a duplicate), otherwise increment degree
-         for tuple in m_adj_list[node]:
-            if tuple[0] in duplicate:
-               continue
-            duplicate.append(tuple[0])
-            degree += 1
-         degOfNodes.append((node,degree))
-      return degOfNodes
-
-
-class numEdgesStrategy(graphMetricsStrategy):
-   def create_metric(self, m_adj_list):
-      edges = 0
-      for node in m_adj_list:
-         for tuple in m_adj_list[node]:
-               edges += 1
-      return edges
-
-# may not be able to use in strategy pattern -------------------------->
-
-class nodeDistanceStrategy(graphMetricsStrategy):
-   def create_metric(self, m_adj_list):
-      return 9
-   
-
-def process_metrics(processingStrategy: graphMetricsStrategy):
-   metric = processingStrategy.create_metric(adjList)
-   print(metric) 
-
-  
-# Run metrics --------->
-# process_metrics(numEdgesStrategy(1))    #figure out why we need a random parameter
-# process_metrics(nodeDistanceStrategy(1))
-# process_metrics(nodeDegreeStrategy(1))
 
 
 

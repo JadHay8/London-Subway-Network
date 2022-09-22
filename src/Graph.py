@@ -1,5 +1,3 @@
-import csv
-
 
 class Graph:
     def __init__(self, num_of_nodes, directed=False):
@@ -75,42 +73,3 @@ class Graph:
     # graph.print_node_loc()
     # print(graph.get_node_loc(7))
 
-class BuildGraph:   
-    def __init__(self, file, file2):
-        self.file = file
-        self.file2 = file2
-            
-
-    def build_graph(self):
-            # row count other than first line of headers is number of stations
-        with open('_dataset/london.stations.csv') as self.file:
-            stations = csv.reader(self.file)
-            numStations = sum(1 for row in stations)+1
-
-            graph = Graph(numStations)
-
-            #Have to open it again for some reason
-            with open('_dataset/london.stations.csv') as self.file:
-                stations = csv.reader(self.file)
-                for fileLine in stations:
-                    if stations.line_num != 1:
-                        graph.add_node_loc(float(fileLine[0]), float(fileLine[1]), float(fileLine[2]))
-            with open('_dataset/london.connections.csv') as self.file2:
-                connections = csv.reader(self.file2)
-                for fileLine in connections:
-                    #print(fileLine)
-                    if connections.line_num != 1:
-                        graph.add_edge(int(fileLine[0]), int(fileLine[1]), int(fileLine[3]))
-            return graph
-                
-   #------------------creating graph ---------------------------------     
-with open('_dataset/london.stations.csv') as file:
-    stations = csv.reader(file)
-
-with open('_dataset/london.connections.csv') as file2:
-    connections = csv.reader(file2)
-
-app = BuildGraph(file,file2)
-graph = app.build_graph()
-# graph.print_adj_list()
-# graph.print_node_loc()
