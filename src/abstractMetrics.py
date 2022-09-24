@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from Graph import Graph
-import csv
-from nodeDegree import nodeDegreeStrategy
+from BuildGraph import BuildGraph
 
 
 
@@ -29,7 +28,45 @@ class graphMetricsStrategy(ABC,Graph):
    def create_metric(self, m_adj_list): #add -> to specify return type 
      pass
 
+class nodeDegreeStrategy(graphMetricsStrategy):
+   def create_metric(self, m_adj_list):
+      degOfNodes = []
+      #iterate through each node in the list
+      for node in m_adj_list:
+         degree = 0
+         duplicate = []
+         #check if the connection has already been accounted for (would add a duplicate), otherwise increment degree
+         for tuple in m_adj_list[node]:
+            if tuple[0] in duplicate:
+               continue
+            duplicate.append(tuple[0])
+            degree += 1
+         degOfNodes.append((node,degree))
+      return degOfNodes
 
+
+      #account for duplicates
+class numEdgesStrategy(graphMetricsStrategy):
+   def create_metric(self, m_adj_list):
+      edges = 0
+      for node in m_adj_list:
+         for tuple in m_adj_list[node]:
+               edges += 1
+      return edges
+
+app = BuildGraph()
+graph = app.build_graph()
+
+adjList = graph.get_adjList()
+
+def process_metrics(processingStrategy: graphMetricsStrategy):
+   metric = processingStrategy.create_metric(adjList)
+   print(metric) 
+
+  
+# Run metrics --------->
+#process_metrics(numEdgesStrategy(1))    #figure out why we need a random parameter
+#process_metrics(nodeDegreeStrategy(1))
 
 #--------------- STRATEGY PATTERN ------------------------------------------------------
 
