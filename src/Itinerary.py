@@ -20,5 +20,4 @@ class Itinerary:
         '''
         get shortest path and rank to get the number 1 best path
         '''
-        TODO
         pass
