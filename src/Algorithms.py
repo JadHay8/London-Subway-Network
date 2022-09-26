@@ -1,6 +1,4 @@
 from abc import ABC, abstractmethod
-from BuildGraph import BuildGraph
-from Graph import Graph
 import sys
 import math
 
@@ -196,6 +194,45 @@ class AStarStrategy(GraphAlgoInterface):
 # -------------------- STRATEGY ALGORITHMS ----------------------------------------
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ------------------------------- old Code ----------------------------->
+
 # Print -------------->
 # def dijkstra_print_result(previous_nodes, shortest_path, start_node, target_node):
     # path = []
@@ -215,31 +252,6 @@ class AStarStrategy(GraphAlgoInterface):
     # print(path[0])
     #print(" -> ".join(reversed(str(path))))
 
-
-# --------Calling ALgo Strategy -----------------
-app = BuildGraph()
-graph = app.build_graph()
-
-start = 1  # how do we figure out what we start at
-stop = 286
-
-
-def process_graph(processingStrategy: GraphAlgoInterface):
-    shortestPath = processingStrategy.execute()
-    return shortestPath
-
-
-print("A STAR ---------------------------------------------")
-# needed to add a second variable to fit strategy pattern
-shortest_path = process_graph(AStarStrategy(graph, start, stop))
-
-print("Dijkstra ---------------------------------------------")
-shortest_path = process_graph(dijkstraStrategy(graph, start, stop))
-print(shortest_path)
-# dijkstra_print_result(previous_nodes, shortest_path, 1, 286)
-
-
-# ------------------------------- Original Algorithms ----------------------------->
 
 
 # class Algorithms:
@@ -388,3 +400,4 @@ print(shortest_path)
 
 #         print('Path does not exist!')
 #         return None
+# --------------------------------- old Code ---------------------------

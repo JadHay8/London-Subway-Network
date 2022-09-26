@@ -55,8 +55,8 @@ class Graph:
     def get_node_loc(self, station):
         return self.node_loc.get(station)[0]
 
-    def get_node_dist(self):
-        return self.m_nodes
+    # def get_node_dist(self):
+    #     return self.m_nodes
 
     def print_node_loc(self):
         for key in self.node_loc.keys():
@@ -67,6 +67,4 @@ class Graph:
 
 # Source: https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/representing-graphs-in-code/
 
-    # graph.print_adj_list()
-    # graph.print_node_loc()
-    # print(graph.get_node_loc(7))
+

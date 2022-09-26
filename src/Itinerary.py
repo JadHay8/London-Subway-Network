@@ -1,6 +1,5 @@
-from Algorithms import Algorithm
 
-from Algorithms import Algorithm
+from Algorithms import AStarStrategy
 
 
 class Itinerary:
@@ -14,7 +13,7 @@ class Itinerary:
 
         if self.numTransfers(path1) > self.numTransfers(path2):
             return path2
-        else:
+        else:   
             return path1
 
     def numTransfers(self, path):
@@ -24,8 +23,11 @@ class Itinerary:
         '''
         get shortest path and rank to get the number 1 best path
         '''
-        a = Algorithm()
-        path = a.a_star_algorithm(self.graph, self.station1, self.station2)
+        a = process_graph(AStarStrategy())
+        path = a.AStarStrategy(self.graph, self.station1, self.station2)
 
-        print("path: ", path)
+        print("path: ", path) 
         return path
+
+
+
