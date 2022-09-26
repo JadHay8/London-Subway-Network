@@ -1,6 +1,5 @@
-from Algorithms import Algorithm
-
-from Algorithms import Algorithm
+from Algorithms import *
+from BuildGraph import *
 
 
 class Itinerary:
@@ -24,8 +23,18 @@ class Itinerary:
         '''
         get shortest path and rank to get the number 1 best path
         '''
-        a = Algorithm()
-        path = a.a_star_algorithm(self.graph, self.station1, self.station2)
 
-        print("path: ", path)
-        return path
+        shortest_path_dijk = process_graph(dijkstraStrategy(
+            self.graph, self.station1, self.station2))
+        shortest_path_AStar = process_graph(
+            AStarStrategy(self.graph, self.station1, self.station2))
+
+        if shortest_path_dijk[1] == shortest_path_AStar[1]:
+            return self.rankPaths(shortest_path_dijk[0], shortest_path_AStar[0])
+
+        print("Both paths are the same.")
+        return shortest_path_dijk[0]
+
+    def process_graph(processingStrategy: GraphAlgoInterface):
+        shortestPath = processingStrategy.execute()
+        return shortestPath

@@ -28,7 +28,9 @@ class GraphAlgoInterface(ABC):
 
 class dijkstraStrategy(GraphAlgoInterface):
     station = int
-    path = [station]
+    time = int
+    stations = [station]
+    path = (stations, time)
 
     def __init__(self, graph, start, end):
         self.graph = graph
@@ -73,9 +75,9 @@ class dijkstraStrategy(GraphAlgoInterface):
         # print("shortest_path:", shortest_path)
         # print("END")
         # check shortest_path cost to 189
-        return self.get_path(previous_nodes)
+        return self.get_path(previous_nodes, shortest_path)
 
-    def get_path(self, previous_nodes):
+    def get_path(self, previous_nodes, shortest_path):
         path = []
         node = self.end
 
@@ -86,7 +88,7 @@ class dijkstraStrategy(GraphAlgoInterface):
         # Add the start node manually
         path.append(self.start)
 
-        return list(reversed(path))
+        return (list(reversed(path)), shortest_path[self.end])
         # print("We found the following best path with a value of {}.".format(
         #     shortest_path[self.end]))
         # for i in range(len(path)-1, 0, -1):
@@ -98,12 +100,18 @@ class dijkstraStrategy(GraphAlgoInterface):
 class AStarStrategy(GraphAlgoInterface):
 
     station = int
-    path = [station]
+    time = int
+    stations = [station]
+    path = (stations, time)
 
     def __init__(self, graph, start, end):
         self.graph = graph
         self.start = start
         self.end = end
+
+    def get_path_value(self, path) -> int:
+        """get the total time/weight for the entire path"""
+        return sum(self.graph.value(path[i], path[i+1]) for i in range(len(path)-1))
 
     def h(self, s1, s2) -> float:
         lat1 = self.graph.get_node_loc(s1)[0]
@@ -144,7 +152,7 @@ class AStarStrategy(GraphAlgoInterface):
 
             if n == None:
                 print('Path does not exist!')
-                return None
+                return (None, None)
 
             # if the current node is the stop
             # then we start again from start
@@ -159,8 +167,10 @@ class AStarStrategy(GraphAlgoInterface):
 
                 reconst_path.reverse()
 
+                value = self.get_path_value(reconst_path)
+
                 print('Path found: {}'.format(reconst_path))
-                return reconst_path
+                return (reconst_path, value)
 
             # for all the neighbors of the current node do
             for m in self.graph.get_neighbors(n):
@@ -190,7 +200,7 @@ class AStarStrategy(GraphAlgoInterface):
             closed_lst.add(n)
 
         print('Path does not exist!')
-        return None
+        return (None, None)
 
 
 # -------------------- STRATEGY ALGORITHMS ----------------------------------------
@@ -232,6 +242,7 @@ def process_graph(processingStrategy: GraphAlgoInterface):
 print("A STAR ---------------------------------------------")
 # needed to add a second variable to fit strategy pattern
 shortest_path = process_graph(AStarStrategy(graph, start, stop))
+print(shortest_path)
 
 print("Dijkstra ---------------------------------------------")
 shortest_path = process_graph(dijkstraStrategy(graph, start, stop))
