@@ -48,7 +48,22 @@ class dijkstraStrategy:
 
             unvisited_nodes.remove(current_min_node)
 
-        return previous_nodes, shortest_path
+        path = []
+        node = end_node
+
+        while node != start_node:
+            path.append(node)
+            node = previous_nodes[node]
+
+        # Add the start node manually
+        path.append(start_node)
+
+        print("We found the following best path with a value of {}.".format(shortest_path[end_node]))
+        for i in range(len(path)-1, 0, -1):
+            print(path[i], "->", end=' ')
+        print(path[0])
+
+        return shortest_path
 
     
 class AStarStrategy:
@@ -92,7 +107,7 @@ class AStarStrategy:
 
             if n == None:
                 print('Path does not exist!')
-                return None, None
+                return None
 
             # if the current node is the stop
             # then we start again from start
@@ -106,9 +121,8 @@ class AStarStrategy:
                 reconst_path.append(start)
 
                 reconst_path.reverse()
-
-                print('Path found: {}'.format(reconst_path))
-                return reconst_path, None
+                
+                return reconst_path
 
             # for all the neighbors of the current node do
             for m in graph.get_neighbors(n):
@@ -138,7 +152,7 @@ class AStarStrategy:
             closed_lst.add(n)
 
         print('Path does not exist!')
-        return None, None
+        return None
 
     
 
@@ -147,48 +161,30 @@ class AStarStrategy:
 
 
 
-
-#Print -------------->
-def dijkstra_print_result(previous_nodes, shortest_path, start_node, target_node):
-        path = []
-        node = target_node
-
-        while node != start_node:
-            path.append(node)
-            node = previous_nodes[node]
-
-        # Add the start node manually
-        path.append(start_node)
-
-        print("We found the following best path with a value of {}.".format(
-            shortest_path[target_node]))
-        for i in range(len(path)-1, 0, -1):
-            print(path[i], "->", end=' ')
-        print(path[0])
-        #print(" -> ".join(reversed(str(path))))
-
-
-
 # --------Calling ALgo Strategy -----------------
 app = BuildGraph()
 graph = app.build_graph()
 
-start = 1 #how do we figure out what we start at
+#fix hard coding
+start = 1
 stop = 286
 
 def process_graph(processingStrategy: graphAlgoStrategy):
-   prevNodes, shortestPath = processingStrategy.execute(graph,start,stop)
-   return prevNodes, shortestPath
+   shortestPath = processingStrategy.execute(graph,start,stop)
+   return shortestPath
 
    
 print("A STAR ---------------------------------------------")
-#needed to add a second variable to fit strategy pattern
-shortest_path, nothing = process_graph(AStarStrategy())
+shortest_path1 = process_graph(AStarStrategy())
+print('Path found: {}'.format(shortest_path1))
 
 
 print("Dijkstra ---------------------------------------------")
-previous_nodes, shortest_path = process_graph(dijkstraStrategy())
-dijkstra_print_result(previous_nodes, shortest_path, 1, 286)
+#prints in the function. May need fixing
+shortest_path2 = process_graph(dijkstraStrategy())
+
+
+
 
 
 
