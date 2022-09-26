@@ -1,6 +1,4 @@
 from abc import ABC, abstractmethod
-from BuildGraph import BuildGraph
-from Graph import Graph
 import sys
 import math
 
@@ -8,7 +6,9 @@ import math
 # -------------------- STRATEGY ALGORITHMS ----------------------------------------
 class GraphAlgoInterface(ABC):
     station = int
-    path = [station]
+    time = int
+    stations = [station]
+    path = (stations, time)
 
     @abstractmethod
     def __init__(self, graph, start, end):
@@ -210,14 +210,11 @@ class AStarStrategy(GraphAlgoInterface):
 # def dijkstra_print_result(previous_nodes, shortest_path, start_node, target_node):
     # path = []
     # node = target_node
-
     # while node != start_node:
     #     path.append(node)
     #     node = previous_nodes[node]
-
     # # Add the start node manually
     # path.append(start_node)
-
     # print("We found the following best path with a value of {}.".format(
     #     shortest_path[target_node]))
     # for i in range(len(path)-1, 0, -1):

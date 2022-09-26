@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 from BuildGraph import BuildGraph
 #
 
@@ -22,13 +22,13 @@ from BuildGraph import BuildGraph
 
 #--------------- STRATEGY PATTERN ------------------------------------------------------
 #abstract method
-class graphMetricsStrategy(ABC):
+class graphMetricsInterface(ABC):
    @abstractmethod
    #call with adj_list from graph
    def create_metric(self, m_adj_list): #add -> to specify return type 
      pass
 
-class nodeDegreeStrategy(graphMetricsStrategy):
+class nodeDegreeStrategy(graphMetricsInterface):
    def create_metric(self, m_adj_list):
       degOfNodes = []
       #iterate through each node in the list
@@ -46,7 +46,7 @@ class nodeDegreeStrategy(graphMetricsStrategy):
 
 
       #account for duplicates
-class numEdgesStrategy(graphMetricsStrategy):
+class numEdgesStrategy(graphMetricsInterface):
    def create_metric(self, m_adj_list):
       edges = 0
       for node in m_adj_list:
@@ -59,7 +59,7 @@ graph = app.build_graph()
 
 adjList = graph.get_adjList()
 
-def process_metrics(processingStrategy: graphMetricsStrategy):
+def process_metrics(processingStrategy: graphMetricsInterface):
    metric = processingStrategy.create_metric(adjList)
    return metric
 
@@ -71,60 +71,60 @@ def process_metrics(processingStrategy: graphMetricsStrategy):
 #--------------- STRATEGY PATTERN ------------------------------------------------------
  # ------------------------------------------- Run metrics (maybe put this is test) --------------------->
 #process_metrics(numEdgesStrategy()) 
-degrees = process_metrics(nodeDegreeStrategy())
+# degrees = process_metrics(nodeDegreeStrategy())
 
 
-#degree    
-dev_x = []
-#number of nodes with such degree
-dev_y = []
+# #degree    
+# dev_x = []
+# #number of nodes with such degree
+# dev_y = []
 
-index = 0
+# index = 0
 
-def graph_degree(metric):
-   #iterate through each (node,degree) tuple from metric
-   for tuple in metric:
-      #skip first entry
-      if(tuple[0] == 0):
-         continue
-      elif(tuple[0] == 1):
-         dev_x.append(tuple[1])
-         dev_y.append(1)
-         continue
-      #check if the degree is in x axis
-      if tuple[1] in dev_x:
-         #increment corresponding y index
-         index = dev_x.index(tuple[1])
-         dev_y[index] = dev_y[index] + 1
-      #create new index for x and y axis    
-      else:
-         #insert degree in x in ascending order, and create an index for corresponding y as well
+# def graph_degree(metric):
+#    #iterate through each (node,degree) tuple from metric
+#    for tuple in metric:
+#       #skip first entry
+#       if(tuple[0] == 0):
+#          continue
+#       elif(tuple[0] == 1):
+#          dev_x.append(tuple[1])
+#          dev_y.append(1)
+#          continue
+#       #check if the degree is in x axis
+#       if tuple[1] in dev_x:
+#          #increment corresponding y index
+#          index = dev_x.index(tuple[1])
+#          dev_y[index] = dev_y[index] + 1
+#       #create new index for x and y axis    
+#       else:
+#          #insert degree in x in ascending order, and create an index for corresponding y as well
 
-         for i in reversed(dev_x):
-            check = False
-            if tuple[1] > i:
-               index = dev_x.index(i)    
-               dev_x.insert(index+ 1,tuple[1])
-               dev_y.insert(index +1, 1)
-               check = True
-               break
-         #if check is never switched to true, tuple is smaller than everything so insert at beginning
-         if check == False:
-            dev_x.insert(0,tuple[1])
-            dev_y.insert(0, 1)
+#          for i in reversed(dev_x):
+#             check = False
+#             if tuple[1] > i:
+#                index = dev_x.index(i)    
+#                dev_x.insert(index+ 1,tuple[1])
+#                dev_y.insert(index +1, 1)
+#                check = True
+#                break
+#          #if check is never switched to true, tuple is smaller than everything so insert at beginning
+#          if check == False:
+#             dev_x.insert(0,tuple[1])
+#             dev_y.insert(0, 1)
          
-   print(dev_x , "dev_x")
-   print(dev_y , "dev_y")
-   return dev_x,dev_y
-#deg = [(0,0), (1,4), (2,4), (3,3),(4,2),(5,5),(6,7),(7,6),(8,1),(9,7),(10,6) ]
-devX,devY = graph_degree(degrees)
+#    print(dev_x , "dev_x")
+#    print(dev_y , "dev_y")
+#    return dev_x,dev_y
+# #deg = [(0,0), (1,4), (2,4), (3,3),(4,2),(5,5),(6,7),(7,6),(8,1),(9,7),(10,6) ]
+# devX,devY = graph_degree(degrees)
 
 # plot graph ------------->
-x = plt.plot(devX, devY)
-plt.xlabel('degree')
-plt.ylabel('# of nodes')
-plt.title('distribution of nodes degree')
-plt.show()
+# x = plt.plot(devX, devY)
+# plt.xlabel('degree')
+# plt.ylabel('# of nodes')
+# plt.title('distribution of nodes degree')
+# plt.show()
 
 
 
