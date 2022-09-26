@@ -1,3 +1,4 @@
+from Algorithms import Algorithm
 
 class Itinerary:
     def __init__(self, graph, station1, station2):
@@ -13,11 +14,15 @@ class Itinerary:
         else:
             return path1
 
-    def numTransfers(self, station):
-        return len(station)-1
+    def numTransfers(self, path):
+        return len(path)-1
 
-    def getItinerary(self):
+    def get_itinerary(self):
         '''
         get shortest path and rank to get the number 1 best path
         '''
-        pass
+        a = Algorithm()
+        path = a.a_star_algorithm(self.graph, self.station1, self.station2)
+
+        print("path: ",path)
+        return path

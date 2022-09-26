@@ -1,4 +1,3 @@
-
 class Graph:
     def __init__(self, num_of_nodes, directed=False):
         self.m_num_of_nodes = num_of_nodes
@@ -50,13 +49,12 @@ class Graph:
 
 # ---------------------node_loc-----------------------------------------
 
-
     def add_node_loc(self, node, long, lat):
         self.node_loc[node].append((long, lat))
 
     def get_node_loc(self, station):
         return self.node_loc.get(station)[0]
-    
+
     def get_node_dist(self):
         return self.m_nodes
 
@@ -72,4 +70,3 @@ class Graph:
     # graph.print_adj_list()
     # graph.print_node_loc()
     # print(graph.get_node_loc(7))
-

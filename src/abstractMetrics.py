@@ -1,5 +1,5 @@
-from matplotlib import pyplot as plt
 from abc import ABC, abstractmethod
+from matplotlib import pyplot as plt
 from BuildGraph import BuildGraph
 
 
@@ -62,11 +62,14 @@ adjList = graph.get_adjList()
 def process_metrics(processingStrategy: graphMetricsStrategy):
    metric = processingStrategy.create_metric(adjList)
    return metric
- #--------------- STRATEGY PATTERN ------------------------------------------------------  
-
 
   
-# ------------------------------------------- Run metrics (maybe put this is test) --------------------->
+# Run metrics --------->
+#process_metrics(numEdgesStrategy())
+#process_metrics(nodeDegreeStrategy())
+
+#--------------- STRATEGY PATTERN ------------------------------------------------------
+ # ------------------------------------------- Run metrics (maybe put this is test) --------------------->
 #process_metrics(numEdgesStrategy()) 
 degrees = process_metrics(nodeDegreeStrategy())
 
@@ -117,16 +120,11 @@ def graph_degree(metric):
 devX,devY = graph_degree(degrees)
 
 # plot graph ------------->
-# plt.plot(devX, devY)
-
-# plt.xlabel('degree')
-# plt.ylabel('# of nodes')
-# plt.title('distribution of nodes degree')
-
-
-
-
-
+x = plt.plot(devX, devY)
+plt.xlabel('degree')
+plt.ylabel('# of nodes')
+plt.title('distribution of nodes degree')
+plt.show()
 
 
 
