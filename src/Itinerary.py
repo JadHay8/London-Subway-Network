@@ -1,5 +1,8 @@
 from Algorithms import Algorithm
 
+from Algorithms import Algorithm
+
+
 class Itinerary:
     def __init__(self, graph, station1, station2):
         self.graph = graph
@@ -24,5 +27,5 @@ class Itinerary:
         a = Algorithm()
         path = a.a_star_algorithm(self.graph, self.station1, self.station2)
 
-        print("path: ",path)
+        print("path: ", path)
         return path
