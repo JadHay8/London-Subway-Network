@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import sys
 import math
+#from Itinerary import Itinerary 
 
 
 # -------------------- STRATEGY ALGORITHMS ----------------------------------------
@@ -206,45 +207,13 @@ class AStarStrategy(GraphAlgoInterface):
 # -------------------- STRATEGY ALGORITHMS ----------------------------------------
 
 
-# Print -------------->
-# def dijkstra_print_result(previous_nodes, shortest_path, start_node, target_node):
-    # path = []
-    # node = target_node
-    # while node != start_node:
-    #     path.append(node)
-    #     node = previous_nodes[node]
-    # # Add the start node manually
-    # path.append(start_node)
-    # print("We found the following best path with a value of {}.".format(
-    #     shortest_path[target_node]))
-    # for i in range(len(path)-1, 0, -1):
-    #     print(path[i], "->", end=' ')
-    # print(path[0])
-    #print(" -> ".join(reversed(str(path))))
 
 
-# --------Calling ALgo Strategy -----------------
-app = BuildGraph()
-graph = app.build_graph()
-
-start = 1  # how do we figure out what we start at
-stop = 286
 
 
-def process_graph(processingStrategy: GraphAlgoInterface):
-    shortestPath = processingStrategy.execute()
-    return shortestPath
 
 
-print("A STAR ---------------------------------------------")
-# needed to add a second variable to fit strategy pattern
-shortest_path = process_graph(AStarStrategy(graph, start, stop))
-print(shortest_path)
 
-print("Dijkstra ---------------------------------------------")
-shortest_path = process_graph(dijkstraStrategy(graph, start, stop))
-print(shortest_path)
-# dijkstra_print_result(previous_nodes, shortest_path, 1, 286)
 
 
 # ------------------------------- Original Algorithms ----------------------------->

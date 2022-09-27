@@ -1,11 +1,8 @@
 from BuildGraph import BuildGraph
-from abstractMetrics import graphMetricsInterface
-from Algorithms import GraphAlgoInterface
-from Algorithms import dijkstraStrategy
-from Algorithms import AStarStrategy
-from abstractMetrics import numEdgesStrategy
-from abstractMetrics import nodeDegreeStrategy
+from Algorithms import *
+from abstractMetrics import *
 from DegreePlot import DegreePlot
+#from matplotlib import pyplot as plt
 
 
 
@@ -25,22 +22,21 @@ class App:
         
         
         
-
+        
         app = BuildGraph()
         graph = app.build_graph()
         adjList = graph.get_adjList()
+        
+        # ----------------running metrics--------------
+        test = process_metrics(numEdgesStrategy())
+        #print(test)
 
-        plot = DegreePlot()
         
 
-        degrees = process_metrics(nodeDegreeStrategy())
-        devX,devY = plot.graph_degree_plot(degrees)
-        print(devX, devY)
+        # ------------------run algorithms---------------
 
-        test = process_metrics(numEdgesStrategy())
-        print(test)
-
-        start = 1  # how do we figure out what we start at
+        #figure out how to make start and stop variable
+        start = 1
         stop = 286
 
         print("A STAR ---------------------------------------------")
@@ -52,6 +48,26 @@ class App:
         print(shortest_path)
         # dijkstra_print_result(previous_nodes, shortest_path, 1, 286)
 
+
+        
+        # ------------------plot graph-----------------
+        #uncomment stuff to plot graph.. I had to bc I still have error
+        plot = DegreePlot()
+        degrees = process_metrics(nodeDegreeStrategy())
+        plot.graph_degree_plot(degrees)
+
+        
+        
+
+        #test graph ---->>
+        # graph.print_adj_list()
+        # graph.print_node_loc()
+        # print(graph.get_node_loc(7))
+
+
+        
+
+        
     main()
 
        

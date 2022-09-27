@@ -1,3 +1,4 @@
+#from matplotlib import pyplot as plt
 class DegreePlot:
 
     def graph_degree_plot(self, metric):

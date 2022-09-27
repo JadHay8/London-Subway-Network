@@ -10,11 +10,11 @@ class Graph:
         self.m_adj_list = {node: set() for node in self.m_nodes}
 
 # ---------------------adj_list-----------------------------------------
-    def add_edge(self, node1, node2, weight):
-        self.m_adj_list[node1].add((node2, weight))
+    def add_edge(self, node1, node2, weight, line):
+        self.m_adj_list[node1].add((node2, weight, line))
 
         if not self.m_directed:
-            self.m_adj_list[node2].add((node1, weight))
+            self.m_adj_list[node2].add((node1, weight, line))
 
     def get_nodes(self):
         return self.m_num_of_nodes
@@ -36,6 +36,7 @@ class Graph:
             connections.append(tuple[0])
 
         return connections
+
 
     def print_adj_list(self):
         # print(self.m_adj_list.get(1))
