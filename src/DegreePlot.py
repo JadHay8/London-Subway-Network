@@ -1,4 +1,4 @@
-#from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 class DegreePlot:
 
     def graph_degree_plot(self, metric):
@@ -43,11 +43,11 @@ class DegreePlot:
         #print(dev_y , "dev_y")
 
         # plot graph ------------->
-        # x = plt.plot(devX, devY)
-        # plt.xlabel('degree')
-        # plt.ylabel('# of nodes')
-        # plt.title('distribution of nodes degree')
-        # plt.show()
+        x = plt.plot(dev_x, dev_y)
+        plt.xlabel('degree')
+        plt.ylabel('# of nodes')
+        plt.title('distribution of nodes degree')
+        plt.show()
         return dev_x,dev_y
 
         

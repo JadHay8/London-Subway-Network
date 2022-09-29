@@ -2,20 +2,17 @@ from BuildGraph import BuildGraph
 from Algorithms import *
 from abstractMetrics import *
 from DegreePlot import DegreePlot
-#from matplotlib import pyplot as plt
-
-
+from BenchmarkSpace import *
 
 
 class App:
-    
     
     def main():
         def process_metrics(processingStrategy: graphMetricsInterface):
             metric = processingStrategy.create_metric(adjList)
             return metric
         def process_graph(processingStrategy: GraphAlgoInterface):
-            shortestPath = processingStrategy.execute()
+            shortestPath = processingStrategy.execute(graph, start, stop)
             return shortestPath
                     
         
@@ -33,28 +30,36 @@ class App:
 
         
 
-        # ------------------run algorithms---------------
+        # ------------------Running Benchmark---------------
 
         #figure out how to make start and stop variable
         start = 1
         stop = 286
+        space = BenchmarkSpace(1,10)
+        graphs = space.withNbStations([10,50,100])
+        dCount, aCount = space.withStrategies(graphs, [AStarStrategy(), dijkstraStrategy()])
 
-        print("A STAR ---------------------------------------------")
-        # needed to add a second variable to fit strategy pattern
-        shortest_path = process_graph(AStarStrategy(graph, start, stop))
+        print (dCount, aCount)
 
-        print("Dijkstra ---------------------------------------------")
-        shortest_path = process_graph(dijkstraStrategy(graph, start, stop))
-        print(shortest_path)
-        # dijkstra_print_result(previous_nodes, shortest_path, 1, 286)
+
+
+
+        # print("A STAR ---------------------------------------------")
+        # # needed to add a second variable to fit strategy pattern
+        # shortest_path = process_graph(AStarStrategy())
+
+        # print("Dijkstra ---------------------------------------------")
+        # shortest_path = process_graph(dijkstraStrategy())
+        # print(shortest_path)
+        # # dijkstra_print_result(previous_nodes, shortest_path, 1, 286)
 
 
         
         # ------------------plot graph-----------------
         #uncomment stuff to plot graph.. I had to bc I still have error
-        plot = DegreePlot()
-        degrees = process_metrics(nodeDegreeStrategy())
-        plot.graph_degree_plot(degrees)
+        # plot = DegreePlot()
+        # degrees = process_metrics(nodeDegreeStrategy())
+        # plot.graph_degree_plot(degrees)
 
         
         
