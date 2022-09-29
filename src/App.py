@@ -1,8 +1,10 @@
-from BuildGraph import BuildGraph
-from Algorithms import *
-from abstractMetrics import *
-from DegreePlot import DegreePlot
+from Graphing.BuildGraph import BuildGraph
+from Algorithms.AlgorithmsStrategy import *
+from Metrics.MetricsStrategy import *
 from BenchmarkSpace import *
+
+from Plotting.DegreePlot import DegreePlot
+from Test import *
 
 
 class App:
@@ -26,9 +28,15 @@ class App:
         
         # ----------------running metrics--------------
         test = process_metrics(numEdgesStrategy())
-        #print(test)
+        print(test)
 
         
+        #-------------running test ------------
+        
+
+
+
+
 
         # ------------------Running Benchmark---------------
 
@@ -40,7 +48,7 @@ class App:
         algorithms = [AStarStrategy(), dijkstraStrategy()]
         dCount, aCount = space.withStrategies(the_graphs, algorithms)
         print (dCount, aCount)
-        # space.do_Bench(algorithms, the_graphs)
+        # # space.do_Bench(algorithms, the_graphs)
 
 
         #algorithms = [AStarStrategy(), dijkstraStrategy()]
@@ -51,7 +59,7 @@ class App:
 
         # print("A STAR ---------------------------------------------")
         # # needed to add a second variable to fit strategy pattern
-        # shortest_path = process_graph(AStarStrategy())
+        #shortest_path = process_graph(AStarStrategy())
 
         # print("Dijkstra ---------------------------------------------")
         # shortest_path = process_graph(dijkstraStrategy())

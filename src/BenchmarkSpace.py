@@ -1,7 +1,6 @@
 
-from distutils.util import execute
-from Algorithms import *
-from Graph import Graph
+from Algorithms.AlgorithmsStrategy import *
+from Graphing.Graph import *
 import pyperf
 import random
 
@@ -49,15 +48,16 @@ class BenchmarkSpace:
 
         return dCount, aCount
 
-    def do_Bench(self, processingStrategyOne: GraphAlgoInterface, graphs: list[int]):
-        runner = pyperf.Runner()
-        # Baseline run
-        for graph in graphs:
-            print("----------------------paths--------------------")
-            for algo in processingStrategyOne:
-                    runner.bench_func("dijkstra",  algo.execute(graph, self.start, self.end) , graphs)
-                    runner.bench_func("AStar",algo.execute(graph, self.start, self.end), graphs )
-                    print("done")
+    # def do_Bench(self, processingStrategyOne: GraphAlgoInterface, graphs: list[int]):
+    #     runner = pyperf.Runner()
+    #     # Baseline run
+    #     for graph in graphs:
+    #         print("----------------------paths--------------------")
+    #         for algo in processingStrategyOne:
+    #                 runner.bench_func("dijkstra",  algo.execute(graph, self.start, self.end) , graphs)
+    #                 runner.bench_func("AStar",algo.execute(graph, self.start, self.end), graphs )
+    #                 print("done")
+
 
 
 
