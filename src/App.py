@@ -36,10 +36,15 @@ class App:
         start = 1
         stop = 286
         space = BenchmarkSpace(1,10)
-        graphs = space.withNbStations([10,50,100])
-        dCount, aCount = space.withStrategies(graphs, [AStarStrategy(), dijkstraStrategy()])
-
+        the_graphs = space.withNbStations([10,50,100])
+        algorithms = [AStarStrategy(), dijkstraStrategy()]
+        dCount, aCount = space.withStrategies(the_graphs, algorithms)
         print (dCount, aCount)
+        # space.do_Bench(algorithms, the_graphs)
+
+
+        #algorithms = [AStarStrategy(), dijkstraStrategy()]
+       
 
 
 
