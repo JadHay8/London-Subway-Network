@@ -1,10 +1,7 @@
 import sys
-from Graph import Graph
+from Graphing.Graph import Graph
 import math
-from Algorithms import *
-import pyperf
-
-# time, data accesses,
+from Algorithms.AlgorithmsStrategy import *
 
 
 class DijkstraComparisons(GraphAlgoInterface):

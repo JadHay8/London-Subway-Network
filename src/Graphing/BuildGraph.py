@@ -1,4 +1,4 @@
-from Graph import Graph
+from .Graph import Graph
 import csv
 
 
@@ -24,8 +24,9 @@ class BuildGraph:
                 for fileLine in connections:
                     # print(fileLine)
                     if connections.line_num != 1:
+                        #station1, station2, weight, line
                         graph.add_edge(int(fileLine[0]), int(
-                            fileLine[1]), int(fileLine[3]))
+                            fileLine[1]), int(fileLine[3]), int(fileLine[2]))
             return graph
 
    # ------------------creating graph ---------------------------------
