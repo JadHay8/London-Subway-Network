@@ -8,34 +8,26 @@ from abstractMetrics import nodeDegreeStrategy
 from DegreePlot import DegreePlot
 
 
-
-
 class App:
-    
-    
+
     def main():
         def process_metrics(processingStrategy: graphMetricsInterface):
             metric = processingStrategy.create_metric(adjList)
             return metric
+
         def process_graph(processingStrategy: GraphAlgoInterface):
             shortestPath = processingStrategy.execute()
             return shortestPath
-                    
-        
-        
-        
-        
 
         app = BuildGraph()
         graph = app.build_graph()
         adjList = graph.get_adjList()
 
         plot = DegreePlot()
-        
 
         degrees = process_metrics(nodeDegreeStrategy())
-        devX,devY = plot.graph_degree_plot(degrees)
-        print(devX, devY)
+        plot.graph_degree_plot(degrees)
+        #print(devX, devY)
 
         test = process_metrics(numEdgesStrategy())
         print(test)
@@ -53,5 +45,3 @@ class App:
         # dijkstra_print_result(previous_nodes, shortest_path, 1, 286)
 
     main()
-
-       
