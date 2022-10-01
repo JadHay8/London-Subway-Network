@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 
 
 from Plotting.DegreePlot import DegreePlot
-from Test import *
+# from Test import *
 
 
 class App:

@@ -37,7 +37,6 @@ class Graph:
 
         return connections
 
-
     def print_adj_list(self):
         # print(self.m_adj_list.get(1))
         # print("adjacency list: \t", self.m_adj_list)
@@ -49,7 +48,6 @@ class Graph:
 
 
 # ---------------------node_loc-----------------------------------------
-
 
     def add_node_loc(self, node, long, lat):
         self.node_loc[node].append((long, lat))
@@ -64,6 +62,10 @@ class Graph:
         for key in self.node_loc.keys():
             print("node", key, ": ", self.node_loc[key])
         print("end node dist \n")
+
+    def get_node_line(self, node):
+        return self.m_adj_list.get(node)[2]
+
 
 # ---------------------node_loc-----------------------------------------
 
