@@ -37,18 +37,18 @@ class App:
         # stop = 286
         # space = BenchmarkSpace(1,10)
         # the_graphs = space.withNbStations([10,50,100])
-        # algorithms = [AStarStrategy(), dijkstraStrategy()]
+        # algorithms = [AStarStrategy(), DijkstraStrategy()]
         # dCount, aCount = space.withStrategies(the_graphs, algorithms)
         # print (dCount, aCount)
         # # space.do_Bench(algorithms, the_graphs)
 
-        #algorithms = [AStarStrategy(), dijkstraStrategy()]
+        #algorithms = [AStarStrategy(), DijkstraStrategy()]
 
         # --------------- PLOTTING BENCHMARK---------
         space = BenchmarkSpace(1, 10)
         graphs = space.withNbStations([10, 50, 100, 250])
         dCount, aCount = space.withStrategies(
-            graphs, [AStarStrategy(), dijkstraStrategy()])
+            graphs, [AStarStrategy(), DijkstraStrategy()])
 
         print(dCount, aCount)
 
@@ -83,7 +83,7 @@ class App:
         #shortest_path = process_graph(AStarStrategy())
 
         # print("Dijkstra ---------------------------------------------")
-        # shortest_path = process_graph(dijkstraStrategy())
+        # shortest_path = process_graph(DijkstraStrategy())
         # print(shortest_path)
         # # dijkstra_print_result(previous_nodes, shortest_path, 1, 286)
 

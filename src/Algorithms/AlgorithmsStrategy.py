@@ -22,7 +22,7 @@ class GraphAlgoInterface(ABC):
     #     pass
 
 
-class dijkstraStrategy(GraphAlgoInterface):
+class DijkstraStrategy(GraphAlgoInterface):
     station = int
     time = int
     stations = [station]
@@ -153,7 +153,11 @@ class AStarStrategy(GraphAlgoInterface):
 
             # it will find a node with the lowest value of f() -
             for v in open_lst:
-                if n == None or poo[v] + self.h(v, end, graph) < poo[n] + self.h(n, end, graph):
+                # if nodes have different lines then add weighting
+                w = 0
+                if (n != None) and (graph.get_node_line(n) != graph.get_node_line(v)):
+                    w = 1
+                if n == None or poo[v] + self.h(v, end, graph) + w < poo[n] + self.h(n, end, graph) + w:
                     n = v
                     self.count += 1
 
@@ -184,6 +188,11 @@ class AStarStrategy(GraphAlgoInterface):
             # for all the neighbors of the current node do
             for m in graph.get_neighbors(n):
                 weight = graph.value(n, m)
+
+                # if there is a line transfer between nodes add weight as well:
+                if graph.get_node_line(n) != graph.get_node_line(m):
+                    weight += 1
+
                 # if the current node is not presentin both open_lst and closed_lst
                 # add it to open_lst and note n as it's par
                 if m not in open_lst and m not in closed_lst:

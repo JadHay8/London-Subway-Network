@@ -6,6 +6,7 @@ class Graph:
         # Define the type of a graph
         self.m_directed = directed
 
+        self.node_lines = {node: None for node in self.m_nodes}
         self.node_loc = {node: [] for node in self.m_nodes}
         self.m_adj_list = {node: set() for node in self.m_nodes}
 
@@ -49,11 +50,12 @@ class Graph:
 
 # ---------------------node_loc-----------------------------------------
 
+
     def add_node_loc(self, node, long, lat):
         self.node_loc[node].append((long, lat))
 
-    def get_node_loc(self, station):
-        return self.node_loc.get(station)[0]
+    def get_node_loc(self, node):
+        return self.node_loc.get(node)[0]
 
     def get_node_dist(self):
         return self.m_nodes
@@ -63,8 +65,11 @@ class Graph:
             print("node", key, ": ", self.node_loc[key])
         print("end node dist \n")
 
+    def add_node_line(self, node, line):
+        self.node_lines[node] = line
+
     def get_node_line(self, node):
-        return self.m_adj_list.get(node)[2]
+        return self.node_lines[node]
 
 
 # ---------------------node_loc-----------------------------------------

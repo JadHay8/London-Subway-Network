@@ -46,8 +46,8 @@ def all_cases(one_node, random_graph):
     return[(one_node[0], one_node[1], one_node[2]), (random_graph[0], random_graph[1], random_graph[2])]
 
 
-@pytest.mark.parametrize("algorithm_name", ['dijkstraStrategy()', 'AStarStrategy()'])
-# [dijkstraStrategy(),AStarStrategy()]
+@pytest.mark.parametrize("algorithm_name", ['DijkstraStrategy()', 'AStarStrategy()'])
+# [DijkstraStrategy(),AStarStrategy()]
 # def process_graph(processingStrategy: GraphAlgoInterface):
 #     shortestPath = processingStrategy.execute(graph, 1, 10)
 #     return shortestPath
@@ -70,4 +70,4 @@ def test_algorithms(algorithm_name, all_cases):
     return dCount, aCount
 
 
-#test_algorithms([dijkstraStrategy(), AStarStrategy()],all_cases)
+#test_algorithms([DijkstraStrategy(), AStarStrategy()],all_cases)
