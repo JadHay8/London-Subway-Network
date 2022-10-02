@@ -1,3 +1,4 @@
+
 class Hamiltonian:
   def __init__(self, start, graph):
     #start (& end) vertex

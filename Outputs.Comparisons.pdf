@@ -1,14 +1,0 @@
-             40000     Dijkstra
-                       AStar
-
-             30000
-
-comparisons  20000
-
-             10000
-
-             0
-
-                    0  50        100  150         200  250
-                                      Graph size
-

@@ -1,14 +1,14 @@
 
-from Algorithms.AlgorithmsStrategy import *
-from Metrics.MetricsStrategy import *
+from Algorithms.AlgorithmsStrategy import GraphAlgoInterface
+#from Metrics.MetricsStrategy import *
 from Graphing.Graph import *
 
 import random
 
 class BenchmarkSpace:
-    # def __init__(self, start, end):
-    #     self.start = start
-    #     self.end = end
+
+    graph = list 
+    graphs = list(graph)
 
     def seperateCounts(self, countList):
         aCount = []
@@ -43,31 +43,27 @@ class BenchmarkSpace:
 
 
 # --------------------- Benchmark Algorithms -------------------------
-    def withOpsAlgoStrategies(self, graphs, algoStrategy: GraphAlgoInterface,start, end):
+    def withOpsAlgoStrategies(self, graphs, algoOpStrategy: GraphAlgoInterface,start, end):
         #for each test graph run both algorithms
         allCounts = []
         for graph in graphs:
             print("----------------------paths--------------------")
-            for algo in algoStrategy:
-                path , count, time = algo.execute(graph, start, end)
-                print(path)
+            for algo in algoOpStrategy:
+                count = algo.execute(graph, start, end)
                 allCounts.append(count)
-        dCount, aCount = self.seperateCounts(allCounts)
-
-            
+                dCount, aCount = self.seperateCounts(allCounts)
 
         return dCount, aCount
 
 
 
-    def withTimeAlgoStrategies(self, graphs, algoStrategy: GraphAlgoInterface,start, end):
+    def withTimeAlgoStrategies(self, graphs, algoTimeStrategy: GraphAlgoInterface,start, end):
     #for each test graph run both algorithms
         times = []
         for graph in graphs:
             print("----------------------paths--------------------")
-            for algo in algoStrategy:
-                path , count, time = algo.execute(graph, start, end)
-                print(path)
+            for algo in algoTimeStrategy:
+                time = algo.execute(graph, start, end)
                 times.append(time)
         dtime, atime = self.seperateCounts(times)
                 
@@ -76,22 +72,6 @@ class BenchmarkSpace:
 
 # --------------------- Benchmark Metrics -------------------------
 
-    def withMetricStrategies(self, graphs,metricStrategy: graphMetricsInterface):
-        adj_lists = []
-        values = []
-        allOps = []
-        for graph in graphs:
-            adjList = graph.get_adjList()
-            adj_lists.append(adjList)
-
-        for list in adj_lists:
-            for metric in metricStrategy:
-                value, op = metric.create_metric(list)
-                allOps.append(op)
-                values.append(value)
-        dCount, eCount = self.seperateCounts(allOps)
-
-        return dCount, eCount
 
 
 

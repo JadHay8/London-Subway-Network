@@ -3,6 +3,13 @@ from matplotlib import pyplot as plt
 
 class DegreePlot:
 
+    def plot_graph(self, dev_x, dev_y):
+        x = plt.plot(dev_x, dev_y)
+        plt.xlabel('degree')
+        plt.ylabel('# of nodes')
+        plt.title('distribution of nodes degree')
+        plt.show()
+
     def graph_degree_plot(self, metric):
         # degree
         dev_x = []
@@ -27,7 +34,6 @@ class DegreePlot:
             # create new index for x and y axis
             else:
                 # insert degree in x in ascending order, and create an index for corresponding y as well
-
                 for i in reversed(dev_x):
                     check = False
                     if tuple[1] > i:
@@ -41,15 +47,5 @@ class DegreePlot:
                     dev_x.insert(0, tuple[1])
                     dev_y.insert(0, 1)
 
-        print(dev_x, "dev_x")
-        print(dev_y, "dev_y")
+        self.plot_graph(dev_x,dev_y)
 
-        # plot graph - ----------- ->
-        x = plt.plot(dev_x, dev_y)
-        plt.xlabel('degree')
-        plt.ylabel('# of nodes')
-        plt.title('distribution of nodes degree')
-        plt.show()
-        return dev_x, dev_y
-
-    #deg = [(0,0), (1,4), (2,4), (3,3),(4,2),(5,5),(6,7),(7,6),(8,1),(9,7),(10,6) ]
