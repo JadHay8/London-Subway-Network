@@ -1,4 +1,8 @@
 class Graph:
+    node = int
+    weight = int
+    line = int
+
     def __init__(self, num_of_nodes, directed=False):
         self.m_num_of_nodes = num_of_nodes
         self.m_nodes = range(self.m_num_of_nodes)
@@ -20,7 +24,7 @@ class Graph:
     def get_nodes(self):
         return self.m_num_of_nodes
 
-    def get_adjList(self):
+    def get_adjList(self) -> dict[node:set((node,weight,line))]:
         return self.m_adj_list
 
     def value(self, node1, node2):
