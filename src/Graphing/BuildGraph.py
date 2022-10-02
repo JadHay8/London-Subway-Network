@@ -1,10 +1,10 @@
-from .Graph import Graph
+from Graph import Graph
 import csv
 
 
 class BuildGraph:
 
-    def build_graph(self):
+    def build_graph(self) -> Graph():
         # row count other than first line of headers is number of stations
         with open('_dataset/london.stations.csv') as self.file:
             stations = csv.reader(self.file)
@@ -30,5 +30,29 @@ class BuildGraph:
                         # add node, line to {node: lines} dictionary for actual data storage
                         graph.add_node_line(int(fileLine[0]), int(fileLine[2]))
             return graph
+
+    def get_nodes(self) -> int:
+        with open('_dataset/london.stations.csv') as file:
+            stations = csv.reader(file)
+            print(sum(1 for row in stations)+1)
+            return sum(1 for row in stations)+1
+
+    def get_num_edes(self) -> int:
+        with open('_dataset/london.connections.csv') as file:
+            connections = csv.reader(file)
+            return sum(1 for fileLine in connections) - 1 #exclude header
+
+    # def get_edges(self):
+    #     g = BuildGraph().build_graph()
+    #     adj_list = g.get_adjList()
+
+    #     for node in adj_list:
+    #         #somehow return all edge pairs?
+
+
+
+
+
+
 
    # ------------------creating graph ---------------------------------
