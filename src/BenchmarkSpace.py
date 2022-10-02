@@ -1,17 +1,28 @@
 
 from Algorithms.AlgorithmsStrategy import *
+from Metrics.MetricsStrategy import *
 from Graphing.Graph import *
-import pyperf
+
 import random
 
 class BenchmarkSpace:
-    def __init__(self, start, end):
-        self.start = start
-        self.end = end
+    # def __init__(self, start, end):
+    #     self.start = start
+    #     self.end = end
+
+    def seperateCounts(self, countList):
+        aCount = []
+        bCount = []
+
+        for count in range(len(countList)):
+            if count % 2 == 1:
+                aCount.append(countList[count])
+            if count %2 == 0:
+                bCount.append(countList[count])
+        return aCount,bCount
+
  
-        
-
-
+# -------------------GENERATE RANDOM GRAPH--------------------------------------        
     def withNbStations(self,stationsList):
         #for each test number of nodes, create a graph with that amount of nodes and randomly create each edge/location
         graphs = []
@@ -27,40 +38,67 @@ class BenchmarkSpace:
             graphs.append(graph)
         return graphs
 
-    def withStrategies(self, graphs, processingStrategyOne: GraphAlgoInterface):
+
+
+
+
+# --------------------- Benchmark Algorithms -------------------------
+    def withOpsAlgoStrategies(self, graphs, algoStrategy: GraphAlgoInterface,start, end):
         #for each test graph run both algorithms
         allCounts = []
         for graph in graphs:
             print("----------------------paths--------------------")
-            for algo in processingStrategyOne:
-                path , count = algo.execute(graph, self.start, self.end)
+            for algo in algoStrategy:
+                path , count, time = algo.execute(graph, start, end)
                 print(path)
                 allCounts.append(count)
-        dCount = []
-        aCount = []
+        dCount, aCount = self.seperateCounts(allCounts)
 
-        for count in range(len(allCounts)):
-            if count % 2 == 1:
-                dCount.append(allCounts[count])
-            if count %2 == 0:
-                aCount.append(allCounts[count])
             
 
         return dCount, aCount
 
-    # def do_Bench(self, processingStrategyOne: GraphAlgoInterface, graphs: list[int]):
-    #     runner = pyperf.Runner()
-    #     # Baseline run
-    #     for graph in graphs:
-    #         print("----------------------paths--------------------")
-    #         for algo in processingStrategyOne:
-    #                 runner.bench_func("dijkstra",  algo.execute(graph, self.start, self.end) , graphs)
-    #                 runner.bench_func("AStar",algo.execute(graph, self.start, self.end), graphs )
-    #                 print("done")
+
+
+    def withTimeAlgoStrategies(self, graphs, algoStrategy: GraphAlgoInterface,start, end):
+    #for each test graph run both algorithms
+        times = []
+        for graph in graphs:
+            print("----------------------paths--------------------")
+            for algo in algoStrategy:
+                path , count, time = algo.execute(graph, start, end)
+                print(path)
+                times.append(time)
+        dtime, atime = self.seperateCounts(times)
+                
+
+        return dtime, atime 
+
+# --------------------- Benchmark Metrics -------------------------
+
+    def withMetricStrategies(self, graphs,metricStrategy: graphMetricsInterface):
+        adj_lists = []
+        values = []
+        allOps = []
+        for graph in graphs:
+            adjList = graph.get_adjList()
+            adj_lists.append(adjList)
+
+        for list in adj_lists:
+            for metric in metricStrategy:
+                value, op = metric.create_metric(list)
+                allOps.append(op)
+                values.append(value)
+        dCount, eCount = self.seperateCounts(allOps)
+
+        return dCount, eCount
 
 
 
 
+    
+        
+        
 
         
 
