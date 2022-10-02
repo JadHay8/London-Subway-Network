@@ -36,7 +36,7 @@ def all_cases(random_graph):
 
 
 
-def test_dijstra_pathFinding( all_cases):
+def test_dijkstra_pathFinding( all_cases):
     for case in all_cases:
         path, count, time = DijkstraStrategy().execute(case[0],case[1],case[2])
         assert path == ([1,3,4,5,6,7,8,9,10], 14)

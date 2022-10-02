@@ -4,7 +4,7 @@ from Metrics.MetricsStrategy import *
 from BenchmarkSpace import *
 from matplotlib import pyplot as plt
 import pyperf
-from Algorithms.HamiltonCycle import Hamiltonian
+# from Algorithms.HamiltonCycle import HamiltonCycle
 
 
 from Plotting.DegreePlot import DegreePlot

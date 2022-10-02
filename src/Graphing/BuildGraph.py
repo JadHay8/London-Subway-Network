@@ -1,10 +1,10 @@
-from Graph import Graph
+from .Graph import Graph
 import csv
 
 
 class BuildGraph:
 
-    def build_graph(self) -> Graph():
+    def build_graph(self) -> Graph:
         # row count other than first line of headers is number of stations
         with open('_dataset/london.stations.csv') as self.file:
             stations = csv.reader(self.file)

@@ -36,8 +36,6 @@ class DijkstraStrategy(GraphAlgoInterface):
     stations = [station]
     path = (stations, time)
 
-    
-
     def execute(self, graph, start, end) -> path:
         self.st = time.time()
         # Source: https://www.udacity.com/blog/2021/10/implementing-dijkstras-algorithm-in-python.html
