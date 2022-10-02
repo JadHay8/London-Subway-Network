@@ -74,21 +74,6 @@ class BenchmarkSpace:
 
         return dtime, atime 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
 # --------------------- Benchmark Metrics -------------------------
 
     def withMetricStrategies(self, graphs,metricStrategy: graphMetricsInterface):
