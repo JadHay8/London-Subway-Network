@@ -20,6 +20,12 @@ from abc import ABC, abstractmethod
 #--------------- STRATEGY PATTERN ------------------------------------------------------
 #abstract method
 class graphMetricsInterface(ABC):
+   opsCounter = 0
+   def _ops(self):
+      self.opsCounter  += 1
+   def get_ops(self):
+      return self.opsCounter
+
    @abstractmethod
    #call with adj_list from graph
    def create_metric(self, m_adj_list): #add -> to specify return type 
@@ -30,16 +36,22 @@ class nodeDegreeStrategy(graphMetricsInterface):
       degOfNodes = []
       #iterate through each node in the list
       for node in m_adj_list:
+         super()._ops()
          degree = 0
          duplicate = []
          #check if the connection has already been accounted for (would add a duplicate), otherwise increment degree
          for tuple in m_adj_list[node]:
+            super()._ops()
             if tuple[0] in duplicate:
+               super()._ops()
                continue
             duplicate.append(tuple[0])
+            super()._ops()
             degree += 1
          degOfNodes.append((node,degree))
-      return degOfNodes
+         super()._ops()
+      ops = super().get_ops()
+      return degOfNodes, ops
 
 
       #account for duplicates
@@ -47,9 +59,14 @@ class numEdgesStrategy(graphMetricsInterface):
    def create_metric(self, m_adj_list):
       edges = 0
       for node in m_adj_list:
+         super()._ops()
          for tuple in m_adj_list[node]:
-               edges += 1
-      return edges
+            super()._ops()
+            edges += 1
+      ops = super().get_ops()
+      #account for duplicate edges(undirected)
+      edges = edges/2
+      return edges, ops
 
 #--------------- STRATEGY PATTERN ------------------------------------------------------
  

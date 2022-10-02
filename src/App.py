@@ -3,10 +3,12 @@ from Algorithms.AlgorithmsStrategy import *
 from Metrics.MetricsStrategy import *
 from BenchmarkSpace import *
 from matplotlib import pyplot as plt
+import pyperf
+from Algorithms.HamiltonCycle import Hamiltonian
 
 
 from Plotting.DegreePlot import DegreePlot
-from Test import *
+#from Test import *
 
 
 class App:
@@ -29,48 +31,61 @@ class App:
             shortestPath = processingStrategy.execute(graph, start, stop)
             return shortestPath
         #------------- CALLING STRATEGIES -----------------------------------------------
-                    
-        
-        
+
+
+
+
+    # ------------------Running BenchmarkSpace---------------
+        algorithms = [AStarStrategy(), dijkstraStrategy()]
+        metrics = [nodeDegreeStrategy(),numEdgesStrategy()]
+        space = BenchmarkSpace()
+        graphs = space.withNbStations([10,50,100,250])
+
+        # -------------- algo Ops benchmark ---------------
+        #dCount, aCount = space.withOpsAlgoStrategies(graphs, algorithms, 1, 10)
+        #print (dCount, aCount)
+
+        # -------------- algo Time benchmark ---------------
+
+        dtime, atime = space.withTimeAlgoStrategies(graphs, algorithms, 1, 10)
+        print (dtime, atime)
+
+
+        # -------------- metric benchmark --------------------
+        # dCount, eCount = space.withMetricStrategies(graphs,metrics)
+        # print(dCount, eCount)
+            
+
+    #--------------- PLOTTING Algo BENCHMARK---------
+        def plot_algoOps(dCount,aCount):
+            fig,axes = plt.subplots()
+            scope = [10, 50, 100, 250]
+            axes.set(xlabel = 'Graph size', ylabel = 'Operations')
+            axes.plot(scope, [y for y in dCount] [:len(scope)], '-', label="Dijkstra")
+            axes.plot(scope, [y for y in aCount] [:len(scope)], '-', label="AStar")
+            axes.legend()
+            fig.savefig('Outputs.Operations.pdf')
+            plt.show()
+
+        def plot_algoTime(dTime,aTime):
+            fig,axes = plt.subplots()
+            scope = [10, 50, 100, 250]
+            axes.set(xlabel = 'Graph size', ylabel = 'Time (Milliseconds)')
+            axes.plot(scope, [y for y in dTime] [:len(scope)], '-', label="Dijkstra")
+            axes.plot(scope, [y for y in aTime] [:len(scope)], '-', label="AStar")
+            axes.legend()
+            fig.savefig('Outputs.Time.pdf')
+            plt.show()
+
+        #--------------- PLOTTING Metrics BENCHMARK---------
+
+
+        #plot_algoOps(dCount,aCount)
+        plot_algoTime(dtime,atime)
 
         
-        
 
         
-
-         # ------------------Running Benchmark---------------
-
-        #figure out how to make start and stop variable
-        # start = 1
-        # stop = 286
-        # space = BenchmarkSpace(1,10)
-        # the_graphs = space.withNbStations([10,50,100])
-        # algorithms = [AStarStrategy(), dijkstraStrategy()]
-        # dCount, aCount = space.withStrategies(the_graphs, algorithms)
-        # print (dCount, aCount)
-        # # space.do_Bench(algorithms, the_graphs)
-
-
-        #algorithms = [AStarStrategy(), dijkstraStrategy()]
-
-
-
-
-        #--------------- PLOTTING BENCHMARK---------
-        space = BenchmarkSpace(1,10)
-        graphs = space.withNbStations([10,50,100, 250])
-        dCount, aCount = space.withStrategies(graphs, [AStarStrategy(), dijkstraStrategy()])
-
-        print (dCount, aCount)
-
-        fig,axes = plt.subplots()
-        scope = [10, 50, 100, 250]
-        axes.set(xlabel = 'Graph size', ylabel = 'comparisons')
-        axes.plot(scope, [y for y in dCount] [:len(scope)], '-', label="Dijkstra")
-        axes.plot(scope, [y for y in aCount] [:len(scope)], '-', label="AStar")
-        axes.legend()
-        fig.savefig('Outputs.Comparisons.pdf')
-        plt.show()
 
 
 
@@ -99,15 +114,18 @@ class App:
 
 
         #--------------------- TESTING ALGORITHMS ------------------------
-
+        # app = BuildGraph()
+        # graph = app.build_graph()
+        # start = 1
+        # stop = 10
         # print("A STAR ---------------------------------------------")
         # # needed to add a second variable to fit strategy pattern
-        #shortest_path = process_graph(AStarStrategy())
+        # shortest_path = process_graph(AStarStrategy())
 
         # print("Dijkstra ---------------------------------------------")
         # shortest_path = process_graph(dijkstraStrategy())
         # print(shortest_path)
-        # # dijkstra_print_result(previous_nodes, shortest_path, 1, 286)
+
 
         
 
@@ -115,3 +133,24 @@ class App:
     main()
 
        
+
+
+
+
+
+        # # ------------------Running Benchmark---------------   
+        # space = BenchmarkSpace(1,10)
+        # the_graphs = space.withNbStations([10,50,100, 250])
+        # algorithms = [AStarStrategy(), dijkstraStrategy()]
+
+        # def do_Bench(processingStrategy: GraphAlgoInterface, graphs):
+        #     runner = pyperf.Runner()
+        #     # Baseline run
+        #     for graph in graphs:
+        #         print("----------------------paths--------------------")
+        #         for algo in processingStrategy:
+        #                 runner.bench_func(algo.execute(graph, 1, 10), graph )
+        #                 print("done")
+            
+        # do_Bench(algorithms, the_graphs)
+         
