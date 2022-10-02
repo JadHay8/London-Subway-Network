@@ -12,7 +12,7 @@ from Plotting.DegreePlot import DegreePlot
 
 
 class App:
-    
+
     def main():
 
         app = BuildGraph()
@@ -21,12 +21,12 @@ class App:
         start = 1
         stop = 10
 
+        # ------------- CALLING STRATEGIES -----------------------------------------------
 
-
-        #------------- CALLING STRATEGIES -----------------------------------------------
         def process_metrics(processingStrategy: graphMetricsInterface):
             metric = processingStrategy.create_metric(adjList)
             return metric
+
         def process_graph(processingStrategy: GraphAlgoInterface):
             shortestPath = processingStrategy.execute(graph, start, stop)
             return shortestPath
@@ -36,7 +36,7 @@ class App:
 
 
     # ------------------Running BenchmarkSpace---------------
-        algorithms = [AStarStrategy(), dijkstraStrategy()]
+        algorithms = [AStarStrategy(), DijkstraStrategy()]
         metrics = [nodeDegreeStrategy(),numEdgesStrategy()]
         space = BenchmarkSpace()
         graphs = space.withNbStations([10,50,100,250])
@@ -79,6 +79,7 @@ class App:
 
         #--------------- PLOTTING Metrics BENCHMARK---------
 
+        #print(dCount, aCount)
 
         #plot_algoOps(dCount,aCount)
         plot_algoTime(dtime,atime)
@@ -87,20 +88,14 @@ class App:
 
         
 
-
-
         # ----------------RUNNING METRICS--------------
         # test = process_metrics(numEdgesStrategy())
         # print(test)
-
 
         # ------------------ PLOTTING METRIC (NODE DEGREES) -----------------
         # plot = DegreePlot()
         # degrees = process_metrics(nodeDegreeStrategy())
         # plot.graph_degree_plot(degrees)
-
-
-
 
         # ----------- PRINTING GRAPH -------------------------------
         # graph.print_adj_list()
@@ -123,16 +118,12 @@ class App:
         # shortest_path = process_graph(AStarStrategy())
 
         # print("Dijkstra ---------------------------------------------")
-        # shortest_path = process_graph(dijkstraStrategy())
+        # shortest_path = process_graph(DijkstraStrategy())
         # print(shortest_path)
 
 
-        
-
-        
     main()
 
-       
 
 
 

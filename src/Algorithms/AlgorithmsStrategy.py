@@ -23,22 +23,13 @@ class GraphAlgoInterface(ABC):
         """Execute algorithm"""
         pass
 
-
-    # ----------------- GET WORKING ----------------------------
-    
-
-    
-
-
-
     # @abstractmethod
     # def get_path(self):
     #     """Obtain result"""
     #     pass
 
 
-
-class dijkstraStrategy(GraphAlgoInterface):
+class DijkstraStrategy(GraphAlgoInterface):
     station = int
     st = int
     et = int
@@ -102,10 +93,9 @@ class dijkstraStrategy(GraphAlgoInterface):
         # print("shortest_path:", shortest_path)
         # print("END")
         # check shortest_path cost to 189
-        
-        return self.get_path(previous_nodes, shortest_path,start,end)
+        return self.get_path(previous_nodes, shortest_path, start, end)
 
-    def get_path(self, previous_nodes, shortest_path,start,end):
+    def get_path(self, previous_nodes, shortest_path, start, end):
         path = []
         node = end
 
@@ -236,7 +226,11 @@ class AStarStrategy(GraphAlgoInterface):
             for m in graph.get_neighbors(n):
                 super()._ops()
                 weight = graph.value(n, m)
-                super()._ops()
+
+                # if there is a line transfer between nodes add weight as well:
+                if graph.get_node_line(n) != graph.get_node_line(m):
+                    weight += 1
+
                 # if the current node is not presentin both open_lst and closed_lst
                 # add it to open_lst and note n as it's par
                 if m not in open_lst and m not in closed_lst:
@@ -290,15 +284,6 @@ class AStarStrategy(GraphAlgoInterface):
 
 
 # -------------------- STRATEGY ALGORITHMS ----------------------------------------
-
-
-
-
-
-
-
-
-
 
 
 # ------------------------------- Original Algorithms ----------------------------->

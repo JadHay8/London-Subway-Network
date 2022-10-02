@@ -62,9 +62,9 @@ def test_found_path(random_graph):
 
 
 def test_algorithms(algorithm_name, all_cases):
-    for graph in all_cases:
-        results = 
-        assert found_path(results['foundPath'])
+    for i in all_cases:
+        print(i)
+
     # #algo = 
     # allCounts = []
     # for graph in all_cases:
