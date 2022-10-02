@@ -8,7 +8,7 @@ import random
 class BenchmarkSpace:
 
     graph = list 
-    graphs = list(graph)
+    graphs = list[graph]
 
     def seperateCounts(self, countList):
         aCount = []

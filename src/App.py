@@ -10,7 +10,7 @@ from Plotting.DegreePlot import DegreePlot
 from Plotting.OpsPlot import OpsPlot
 from Plotting.TimePlot import TimePlot
 
-from Algorithms.HamiltonCycle import Hamiltonian
+from Algorithms.HamiltonCycle import HamiltonCycle
 
 
 
