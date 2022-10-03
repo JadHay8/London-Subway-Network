@@ -35,7 +35,9 @@ class nodeDegreeStrategy(graphMetricsInterface):
          duplicate = []
          #check if the connection has already been accounted for (would add a duplicate), otherwise increment degree
          for tuple in m_adj_list[node]:
+
             if tuple[0] in duplicate:
+   
                continue
             duplicate.append(tuple[0])
             degree += 1
@@ -43,12 +45,13 @@ class nodeDegreeStrategy(graphMetricsInterface):
       return degOfNodes
 
 
-
+      #account for duplicates
 class numEdgesStrategy(graphMetricsInterface):
    def create_metric(self, m_adj_list):
       edges = 0
       for node in m_adj_list:
          for tuple in m_adj_list[node]:
+
             edges += 1
       #account for duplicate edges(undirected)
       edges = edges//2
@@ -56,3 +59,35 @@ class numEdgesStrategy(graphMetricsInterface):
 
 #--------------- STRATEGY PATTERN ------------------------------------------------------
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+# -------------------ONE NODE TO EVERY NODE IMPLEMENTATION NODE DISTANCE ---------------------------------------
+# def nodeDistance(node_dist,nodeLong, nodeLat):
+#    distances = []
+#    for node in node_dist:
+#       for tuple in node_dist[node]:
+#          #print(tuple)
+#          if(tuple[0] == nodeLong and tuple[1] == nodeLat):
+#             continue
+#          else:
+#             long = tuple[0]
+#             lat = tuple[1]
+#             a = nodeLong - long
+#             b = nodeLat - lat
+#             c = math.sqrt(a**2 + b**2)
+#          distances.append((node, c))
+#          print(node, c)
+#     return distances
+# nodeDistance(nodeDist, 51.4991, -0.1115)
+# -------------------ONE NODE TO EVERY NODE IMPLEMENTATION NODE DISTANCE ---------------------------------------    

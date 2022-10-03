@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from operator import truediv
 import sys
 import math
 
@@ -24,11 +25,11 @@ class DijkstraStrategy(GraphAlgoInterface):
     time = int
     stations = [station]
     path = (stations, time)
+    edge = (station,station)
 
     def execute(self, graph, start, end) -> path:
         # Source: https://www.udacity.com/blog/2021/10/implementing-dijkstras-algorithm-in-python.html
         unvisited_nodes = list(range(1, graph.get_nodes()))
-        
 
         shortest_path = {}
         previous_nodes = {}
@@ -48,17 +49,19 @@ class DijkstraStrategy(GraphAlgoInterface):
 
                 elif shortest_path[node] < shortest_path[current_min_node]:
                     current_min_node = node
- 
             # The code block below retrieves the current node's neighbors and updates their distances
             neighbors = graph.get_neighbors(current_min_node)
             for neighbor in neighbors:   
                 tentative_value = shortest_path[current_min_node] + \
                 graph.value(current_min_node, neighbor)
-    
-                #check if new station switches lines, if so add time
-                if (graph.get_node_line(current_min_node) != graph.get_node_line(neighbor)):
-                    tentative_value += 1 
 
+                #Get edge from prev node to current_min_node
+                prev = self.prev_edge(graph,current_min_node)
+
+                #check if new station switches lines, if so add time
+                if (self.is_transfer(graph,(current_min_node,neighbor),prev)):
+                    tentative_value += 1
+                
                 if tentative_value < shortest_path[neighbor]:
                     shortest_path[neighbor] = tentative_value
                     
@@ -68,6 +71,18 @@ class DijkstraStrategy(GraphAlgoInterface):
             unvisited_nodes.remove(current_min_node)
             
         return self.get_path(previous_nodes, shortest_path, start, end)
+
+    def prev_edge(self, graph, node) -> edge:
+        lines = graph.get_lines()
+        for edge in lines:
+            if edge[0] == node or edge[1] == node:
+                return edge
+
+
+    def is_transfer(graph, edge1: tuple[station,station] , edge2: tuple[station,station]) -> bool:
+        if graph.get_line(edge1) != graph.get_line(edge2):
+            return True
+        return False
 
     def get_path(self, previous_nodes, shortest_path, start, end):
         path = []
@@ -93,6 +108,7 @@ class AStarStrategy(GraphAlgoInterface):
     time = int
     stations = [station]
     path = (stations, time)
+    edge = (station,station)
 
     
 
@@ -109,6 +125,17 @@ class AStarStrategy(GraphAlgoInterface):
 
         # distance between in km
         return 6378.8*math.acos((math.sin(lat1) * math.sin(lat2)) + math.cos(lat1) * math.cos(lat2) * math.cos(long2-long1))
+
+    def prev_edge(self, graph, node) -> edge:
+        lines = graph.get_lines()
+        for edge in lines:
+            if edge[0] == node or edge[1] == node:
+                return edge
+
+    def is_transfer(graph, edge1: tuple[station,station] , edge2: tuple[station,station]):
+        if graph.get_line(edge1) != graph.get_line(edge2):
+            return True
+        return False
 
     def execute(self, graph, start, end) -> path:
         # Source: https://www.pythonpool.com/a-star-algorithm-python/#:~:text=A*%20Algorithm%20in%20Python%20or,a%20wide%20range%20of%20contexts.
@@ -136,10 +163,16 @@ class AStarStrategy(GraphAlgoInterface):
             for v in open_lst:
                 # if nodes have different lines then add weighting
                 w = 0
-                if (n != None) and (graph.get_node_line(n) != graph.get_node_line(v)):
+                #Get edge from prev node to current_min_node
+                prev = self.prev_edge(graph,v)
+
+                #check if new station switches lines, if so add time
+                if (self.is_transfer(graph,(n,v),prev)):
                     w = 1
+
                 if n == None or poo[v] + self.h(v, end, graph) + w < poo[n] + self.h(n, end, graph) + w:
                     n = v
+
             if n == None:  
                 print('Path does not exist!')
                 return (None, None)
@@ -165,8 +198,13 @@ class AStarStrategy(GraphAlgoInterface):
                 weight = graph.value(n, m)
 
                 # if there is a line transfer between nodes add weight as well:
-                if graph.get_node_line(n) != graph.get_node_line(m):
-                    weight += 1
+
+                #Get edge from prev node to current_min_node
+                prev = self.prev_edge(graph,n)
+
+                #check if new station switches lines, if so add time
+                if (self.is_transfer(graph,(n,m),prev)):
+                    tentative_value += 1
 
                 # if the current node is not presentin both open_lst and closed_lst
                 # add it to open_lst and note n as it's par

@@ -1,6 +1,6 @@
 from src.Graphing.Graph import Graph
 from src.Algorithms.AlgorithmsStrategy import *
-import pytest
+# import pytest
 import random
 
 
@@ -13,9 +13,10 @@ import random
      
 #     return [graph,1,1]
 
-@pytest.fixture
+# @pytest.fixture
 def random_graph():
     graph = Graph(11)
+    #graph.add_edge(node1,node2,weight,line)
     graph.add_edge(1,2,5,1)
     graph.add_edge(2,4,5,1)
     graph.add_edge(1,3,1,1)
@@ -29,25 +30,57 @@ def random_graph():
     
     return [graph,1,10]
 
-@pytest.fixture
-def all_cases(random_graph):
-    "bring all cases together"
-    return [random_graph]
+# @pytest.fixture
+def gen_transferDiff_graph():
+    graph = Graph(11)
 
+    #graph.add_edge(node1,node2,weight,line)
+    graph.add_edge(1,2,5,2)
+    graph.add_edge(2,4,5,1)
+    graph.add_edge(1,3,5,1)
+    graph.add_edge(3,4,5,1)
+    graph.add_edge(4,5,2,1)
+    graph.add_edge(5,6,2,1)
+    graph.add_edge(6,7,2,1)
+    graph.add_edge(7,8,2,1)
+    graph.add_edge(8,9,2,1)
+    graph.add_edge(9,10,2,1)
+    #2 possible paths: 1,2,4,5,6,7,8,9,10 OR 1,3,4,5,6,7,8,9,10
+    #same weight but path1 requires 2 transfers while path2 requires none
+
+    return [graph,1,10]
+
+# @pytest.fixture
+def all_cases(random_graph,transferDiff):
+    "bring all cases together"
+    return [random_graph,transferDiff]
 
 
 def test_dijkstra_pathFinding(all_cases):
+    c = 1
     for case in all_cases:
+        print(case[0],case[1],case[2])
         path = DijkstraStrategy().execute(case[0],case[1],case[2])
-        assert path == ([1,3,4,5,6,7,8,9,10], 14)
+        if c == 1:
+            print(path)
+            assert path == ([1,3,4,5,6,7,8,9,10], 14)
+            c += 1
+        elif c == 2:
+            print(path)
+            assert path == ([1,3,4,5,6,7,8,9,10], 22)
+            c += 1
 
 
+def main():
+    rg = random_graph()
+    tf = gen_transferDiff_graph()
 
-
-    return None
+    cases = all_cases(rg,tf)
     
+    test_dijkstra_pathFinding(cases)
 
-
+if __name__ == '__main__':
+    main()
 
 
 

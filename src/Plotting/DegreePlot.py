@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
+from MetricPlotInterface import *
 
-
-class DegreePlot:
+class DegreePlot(MetricPlotInterface):
 
     def plot_graph(self, dev_x, dev_y):
         x = plt.plot(dev_x, dev_y)

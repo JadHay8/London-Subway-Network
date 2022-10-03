@@ -1,7 +1,8 @@
 from matplotlib import pyplot as plt
-class TimePlot:
+from MetricPlotInterface import *
+class TimePlot(MetricPlotInterface):
 
-    def plot_algoTime(self, dTime,aTime):
+    def plot_graph(self, dTime,aTime):
             fig,axes = plt.subplots()
             scope = [10, 50, 100, 250]
             axes.set(xlabel = 'Graph size', ylabel = 'Time (Micro Seconds)')

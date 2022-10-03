@@ -1,6 +1,8 @@
 from matplotlib import pyplot as plt
-class OpsPlot:
-    def plot_algoOps(self,dCount,aCount):
+from MetricPlotInterface import *
+
+class OpsPlot(MetricPlotInterface):
+    def plot_graph(self,dCount,aCount):
             fig,axes = plt.subplots()
             scope = [10, 50, 100, 250]
             axes.set(xlabel = 'Graph size', ylabel = 'Operations')

@@ -3,6 +3,7 @@ class Graph:
     node = int
     weight = int
     line = int
+    edge = (node,node)
 
     def __init__(self, num_of_nodes, directed=False):
         self.m_num_of_nodes = num_of_nodes
@@ -12,7 +13,7 @@ class Graph:
         self.m_directed = directed
 
         #intialize dictionaries of station lines, longitudes/latitudes (locations), and edges
-        self.node_lines = {node: None for node in self.m_nodes}
+        self.lines = {}
         self.node_loc = {node: [] for node in self.m_nodes}
         self.m_adj_list = {node: set() for node in self.m_nodes}
 
@@ -65,11 +66,17 @@ class Graph:
             print("node", key, ": ", self.node_loc[key])
         print("end node dist \n")
 
-    def add_node_line(self, node, line):
-        self.node_lines[node] = line
+    def add_lines(self) -> None:
+        for node_set in self.m_adj_list:
+            for tuple in self.m_adj_list.get(node_set):
+                edge = (node_set,tuple[0]) #(node1,node2)
+                self.lines[edge] = tuple[2] #add {edge: line} to self.lines
 
-    def get_node_line(self, node) -> line:
-        return self.node_lines[node]
+    def get_lines(self) -> dict[edge,line]:
+        return self.lines
+
+    def get_line(self, edge) -> line:
+        return self.lines.get(edge)
 
 
 # ---------------------node_loc-----------------------------------------

@@ -1,4 +1,4 @@
-from .Graph import Graph
+from Graph import Graph
 import csv
 
 
@@ -29,7 +29,11 @@ class BuildGraph:
                         graph.add_edge(int(fileLine[0]), int(
                             fileLine[1]), int(fileLine[3]), int(fileLine[2]))
                         # add node, line to {node: lines} dictionary for actual data storage
-                        graph.add_node_line(int(fileLine[0]), int(fileLine[2]))
+                        # graph.add_node_line(int(fileLine[0]), int(fileLine[2]))
+
+            #Create lines dictionary
+            graph.add_lines()
+
             return graph
 
     def get_nodes(self) -> int:
@@ -43,17 +47,3 @@ class BuildGraph:
             connections = csv.reader(file)
             return sum(1 for fileLine in connections) - 1 #exclude header
 
-    # def get_edges(self):
-    #     g = BuildGraph().build_graph()
-    #     adj_list = g.get_adjList()
-
-    #     for node in adj_list:
-    #         #somehow return all edge pairs?
-
-
-
-
-
-
-
-   # ------------------creating graph ---------------------------------
