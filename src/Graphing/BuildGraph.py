@@ -3,8 +3,9 @@ import csv
 
 
 class BuildGraph:
+    graph = list[dict]
 
-    def build_graph(self) -> Graph:
+    def build_graph(self) -> graph:
         # row count other than first line of headers is number of stations
         with open('_dataset/london.stations.csv') as self.file:
             stations = csv.reader(self.file)
