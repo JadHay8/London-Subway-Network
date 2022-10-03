@@ -1,4 +1,5 @@
 class Graph:
+    #Aliases for readability
     node = int
     weight = int
     line = int
@@ -7,14 +8,14 @@ class Graph:
         self.m_num_of_nodes = num_of_nodes
         self.m_nodes = range(self.m_num_of_nodes)
 
-        # Define the type of a graph
+        # Define the type of a graph (undirected)
         self.m_directed = directed
 
+        #intialize dictionaries of station lines, longitudes/latitudes (locations), and edges
         self.node_lines = {node: None for node in self.m_nodes}
         self.node_loc = {node: [] for node in self.m_nodes}
         self.m_adj_list = {node: set() for node in self.m_nodes}
 
-# ---------------------adj_list-----------------------------------------
     def add_edge(self, node1, node2, weight, line):
         self.m_adj_list[node1].add((node2, weight, line))
 
@@ -33,7 +34,7 @@ class Graph:
             if tuple[0] == node2:
                 return tuple[1]
 
-    def get_neighbors(self, node):
+    def get_neighbors(self, node) -> list[node]:
         """Returns the neighbors of a node."""
         connections = []
         # append all neighbours of node
@@ -49,18 +50,13 @@ class Graph:
             print("node", key, ": ", self.m_adj_list[key])
         print("end adj list \n")
 
-# ---------------------adj_list-----------------------------------------
-
-
-# ---------------------node_loc-----------------------------------------
-
-
     def add_node_loc(self, node, long, lat):
         self.node_loc[node].append((long, lat))
 
-    def get_node_loc(self, node):
+    def get_node_loc(self, node) -> tuple[float]:
         return self.node_loc.get(node)[0]
 
+    #What is the point of this?
     def get_node_dist(self):
         return self.m_nodes
 
@@ -72,7 +68,7 @@ class Graph:
     def add_node_line(self, node, line):
         self.node_lines[node] = line
 
-    def get_node_line(self, node):
+    def get_node_line(self, node) -> line:
         return self.node_lines[node]
 
 

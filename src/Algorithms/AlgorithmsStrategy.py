@@ -25,8 +25,6 @@ class DijkstraStrategy(GraphAlgoInterface):
     stations = [station]
     path = (stations, time)
 
-    
-
     def execute(self, graph, start, end) -> path:
         # Source: https://www.udacity.com/blog/2021/10/implementing-dijkstras-algorithm-in-python.html
         unvisited_nodes = list(range(1, graph.get_nodes()))
