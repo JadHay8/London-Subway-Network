@@ -57,14 +57,10 @@ class DijkstraTime(GraphAlgoInterface):
             unvisited_nodes.remove(current_min_node)
             
 
-        # print("previous nodes:", previous_nodes)
-        # print("END")
-        # print("shortest_path:", shortest_path)
-        # print("END")
-        # check shortest_path cost to 189
         return self.get_path(previous_nodes, shortest_path, start, end)
 
-    def get_path(self, previous_nodes, shortest_path, start, end):
+    def get_path(self, previous_nodes, shortest_path, start, end) -> elapsedTime:
+
         path = []
         node = end
 

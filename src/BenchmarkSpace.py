@@ -51,7 +51,7 @@ class BenchmarkSpace:
             for algo in algoOpStrategy:
                 count = algo.execute(graph, start, end)
                 allCounts.append(count)
-                dCount, aCount = self.seperateCounts(allCounts)
+        dCount, aCount = self.seperateCounts(allCounts)
 
         return dCount, aCount
 
