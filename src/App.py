@@ -37,7 +37,6 @@ class App:
 
 
 
-
     # ------------------Running BenchmarkSpace---------------
         algorithms = [AStarStrategy(), DijkstraStrategy()]
         algorithmsOps = [AStarOps(), DijkstraOps()]
@@ -50,8 +49,10 @@ class App:
         # print (dCount, aCount)
 
         # -------------- algo Time benchmark ---------------
-        # dtime, atime = space.withTimeAlgoStrategies(graphs, algorithmsTime, 1, 10)
-        # print (dtime, atime)
+
+        dtime, atime = space.withTimeAlgoStrategies(graphs, algorithms, 1, 10)
+        print (dtime, atime)
+
 
 
 
@@ -70,9 +71,9 @@ class App:
         # print(test)
 
         # ------------------ PLOTTING METRIC (NODE DEGREES) -----------------
-        plot = DegreePlot()
-        degrees = process_metrics(nodeDegreeStrategy())
-        plot.graph_degree_plot(degrees)
+        # plot = DegreePlot()
+        # degrees = process_metrics(nodeDegreeStrategy())
+        # plot.graph_degree_plot(degrees)
 
         # ----------- PRINTING GRAPH -------------------------------
         # graph.print_adj_list()
