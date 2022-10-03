@@ -1,4 +1,3 @@
-from matplotlib import pyplot as plt
 from Graphing.BuildGraph import BuildGraph
 from Metrics.MetricsStrategy import *
 from Algorithms.AlgorithmsStrategy import *
@@ -11,10 +10,6 @@ from Plotting.OpsPlot import OpsPlot
 from Plotting.TimePlot import TimePlot
 
 from Algorithms.HamiltonCycle import HamiltonCycle
-
-
-
-
 
 #from Test import *
 
@@ -51,19 +46,18 @@ class App:
         graphs = space.withNbStations([10,50,100,250])
 
         # -------------- algo Ops benchmark ---------------
-        dCount, aCount = space.withOpsAlgoStrategies(graphs, algorithmsOps, 1, 10)
-        #print (dCount, aCount)
+        # dCount, aCount = space.withOpsAlgoStrategies(graphs, algorithmsOps, 1, 10)
+        # print (dCount, aCount)
 
         # -------------- algo Time benchmark ---------------
-
-        dtime, atime = space.withTimeAlgoStrategies(graphs, algorithmsTime, 1, 10)
-        #print (dtime, atime)
+        # dtime, atime = space.withTimeAlgoStrategies(graphs, algorithmsTime, 1, 10)
+        # print (dtime, atime)
 
 
 
         #--------------- PLOTTING Algo BENCHMARK---------
-        plot = OpsPlot()
-        plot.plot_algoOps(dCount, aCount)
+        # plot = OpsPlot()
+        # plot.plot_algoOps(dCount, aCount)
 
         # plot = TimePlot()
         # plot.plot_algoTime(dtime, atime)
@@ -76,9 +70,9 @@ class App:
         # print(test)
 
         # ------------------ PLOTTING METRIC (NODE DEGREES) -----------------
-        # plot = DegreePlot()
-        # degrees = process_metrics(nodeDegreeStrategy())
-        # plot.graph_degree_plot(degrees)
+        plot = DegreePlot()
+        degrees = process_metrics(nodeDegreeStrategy())
+        plot.graph_degree_plot(degrees)
 
         # ----------- PRINTING GRAPH -------------------------------
         # graph.print_adj_list()
