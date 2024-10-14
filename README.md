@@ -1,0 +1,1 @@
+Implemented design patterns and path finding algorithms like A* and Dijkstra's to create a system that generates an itinerary for someone traveling between stations using the London subway network. (copied from gitlab repository)
